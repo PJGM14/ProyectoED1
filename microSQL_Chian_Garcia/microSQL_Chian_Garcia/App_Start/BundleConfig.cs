@@ -24,7 +24,7 @@ namespace microSQL_Chian_Garcia
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap-Darkly.css",
-                      "~/Content/site.css"));
+                      "~/Content/Site.css"));
         }
     }
 }
