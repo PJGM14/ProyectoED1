@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using microSQL_Chian_Garcia.Instancia
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -19,8 +20,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Palabras reservadas", "Index", "Editor")</li>
-                    <li>@Html.ActionLink("Editor", "Index", "Editor")</li>
+                    @if (Data.Instancia.EditorTexto.PalabrasReservadas != null)
+                    {
+                        <li>@Html.ActionLink("Editor", "Index", "Editor")</li>
+                        <li>@Html.ActionLink("Configuración", "Index", "Editor")</li>
+                    }
                 </ul>
             </div>
         </div>
