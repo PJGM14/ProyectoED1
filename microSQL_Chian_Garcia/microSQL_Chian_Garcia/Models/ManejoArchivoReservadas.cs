@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using microSQL_Chian_Garcia.Instancia;
+using Microsoft.Ajax.Utilities;
 
 namespace microSQL_Chian_Garcia.Models
 {
@@ -11,9 +12,10 @@ namespace microSQL_Chian_Garcia.Models
     {
         public bool ExisteArchivoInicial { get; set; } //Esta propiedad dice si existe un archivo inicial para cargar (sirve para la vista)
         public bool ErrorEnArchivo { get; set; } //Propiedad para saber si el archivo encontrado fue leído correctamente o no
+        
 
-        //Método que asigna al diccionario las palabras reservadas por default y crea el archivo
-        public void PalabrasReservadasDefault(string pathDirectorio)
+        //El diccionario de palabras reservadas toma valores predeterminados
+        public void PalabrasReservadasDefault()
         {
             Data.Instancia.EditorTexto.PalabrasReservadas.Clear();
 
@@ -26,7 +28,11 @@ namespace microSQL_Chian_Garcia.Models
             Data.Instancia.EditorTexto.PalabrasReservadas.Add("INSERT INTO", "INSERT INTO");
             Data.Instancia.EditorTexto.PalabrasReservadas.Add("VALUES", "VALUES");
             Data.Instancia.EditorTexto.PalabrasReservadas.Add("GO", "GO");
+        }
 
+        //Método que escribe el archivo con las palabras reservadas que tiene el diccionario
+        public void EscribirArchivoPalabrasReservadas(string pathDirectorio)
+        {
             using (StreamWriter file = new StreamWriter(pathDirectorio + "\\MicroSQL.ini",false))
             {
                 foreach (var ItemDicc in Data.Instancia.EditorTexto.PalabrasReservadas)
@@ -42,7 +48,62 @@ namespace microSQL_Chian_Garcia.Models
             //Si existe el directorio se busca el archvio en el directorio
             if (Directory.Exists(pathDirectorio))
             {
-                ExisteArchivoInicial = true;
+                if (File.Exists(pathDirectorio+"\\MicroSQL.ini"))
+                {
+                    ExisteArchivoInicial = true;
+
+                    var texto = File.ReadAllText(pathDirectorio + "\\MicroSQL.ini");
+
+                    if (!texto.IsNullOrWhiteSpace())
+                    {
+                        var lineas = File.ReadAllLines(pathDirectorio + "\\MicroSQL.ini");
+
+                        PalabrasReservadasDefault();
+
+                        foreach (var lineaCompleta in lineas)
+                        {
+                            if (!lineaCompleta.IsNullOrWhiteSpace())
+                            {
+                                var campoLinea = lineaCompleta.Split(',');
+
+                                if (campoLinea.Length == 2)
+                                {
+                                    if (Data.Instancia.EditorTexto.PalabrasReservadas.ContainsKey(campoLinea[0]))
+                                    {
+                                        Data.Instancia.EditorTexto.PalabrasReservadas[campoLinea[0]] = campoLinea[1];
+                                    }
+                                    else
+                                    {
+                                        ErrorEnArchivo = true;
+                                        PalabrasReservadasDefault();
+                                        EscribirArchivoPalabrasReservadas(pathDirectorio);
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    ErrorEnArchivo = true;
+                                    PalabrasReservadasDefault();
+                                    EscribirArchivoPalabrasReservadas(pathDirectorio);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        ExisteArchivoInicial = false;
+                        PalabrasReservadasDefault();
+                        EscribirArchivoPalabrasReservadas(pathDirectorio);
+                    }
+                }
+                else
+                {
+                    ExisteArchivoInicial = false;
+                    PalabrasReservadasDefault();
+                    EscribirArchivoPalabrasReservadas(pathDirectorio);
+                }
+
             }
             else //Se crea el directorio con las carpetas que servirán posteriormente y se manda a llamar al método de PalabrasReservadasDefault
             {
@@ -51,7 +112,8 @@ namespace microSQL_Chian_Garcia.Models
                 Directory.CreateDirectory(pathDirectorio + "\\ArbolesB");
                 Directory.CreateDirectory(pathDirectorio+ "\\Tablas");
                 
-                PalabrasReservadasDefault(pathDirectorio);
+                PalabrasReservadasDefault();
+                EscribirArchivoPalabrasReservadas(pathDirectorio);
                 ErrorEnArchivo = false;
             }
         }
