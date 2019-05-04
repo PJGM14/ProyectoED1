@@ -21,25 +21,12 @@ namespace microSQL_Chian_Garcia.Models
 
         //public int Accion { get; set; }
 
-        public Editor(string textoPantalla)
+        public Editor()
         {
-            TextoPantalla = textoPantalla;
+            PalabrasReservadas = new Dictionary<string, string>();
+            TextoPantalla = "";
         }
 
-        public void DiccionarioPalabrasReservadasDefault()
-        {
-            PalabrasReservadas.Clear();
-            PalabrasReservadas.Add("SELECT","SELECT");
-            PalabrasReservadas.Add("FROM", "FROM");
-            PalabrasReservadas.Add("DELETE", "DELETE");
-            PalabrasReservadas.Add("WHERE", "WHERE");
-            PalabrasReservadas.Add("CREATE TABLE", "CREATE TABLE");
-            PalabrasReservadas.Add("DROP TABLE", "DROP TABLE");
-            PalabrasReservadas.Add("INSERT INTO", "INSERT INTO");
-            PalabrasReservadas.Add("VALUES", "VALUES");
-            PalabrasReservadas.Add("GO", "GO");
-        }
-        
         public bool ModificarDiccionario(string rutaArchivo, ref string errorLinea)
         {
             var edicionCorrecta = false;

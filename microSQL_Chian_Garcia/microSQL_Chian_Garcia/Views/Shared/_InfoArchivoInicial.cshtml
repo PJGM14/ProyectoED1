@@ -1,0 +1,18 @@
+﻿@using microSQL_Chian_Garcia.Instancia
+
+@if (Data.Instancia.ArchivoReservadas.ExisteArchivoInicial)
+{
+    <div class="alert alert-dismissible alert-success">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>Palabras reservadas cargadas</strong>
+        <p>Carga correcta de archivo MicroSQL.ini, puede editarlas posteriormente</p>
+    </div>
+}
+else
+{
+    <div class="alert alert-dismissible alert-warning">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>No existe archivo MicroSQL.ini</strong>
+        <p class="mb-0">Se ha creado un archivo con palabras reservadas de manera automática, puede editarlas posteriormente.</p>
+    </div>
+}

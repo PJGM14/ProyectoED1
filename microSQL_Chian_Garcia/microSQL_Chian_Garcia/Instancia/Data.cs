@@ -23,6 +23,9 @@ namespace microSQL_Chian_Garcia.Instancia
             }
         }
 
-        public Editor EditorTexto = new Editor("");
+        public string PathDirectorio = "";
+        public int Ingreso = 0;
+        public ManejoArchivoReservadas ArchivoReservadas = new ManejoArchivoReservadas();
+        public Editor EditorTexto = new Editor();
     }
 }

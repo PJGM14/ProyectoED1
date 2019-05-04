@@ -1,26 +1,36 @@
-﻿@model microSQL_Chian_Garcia.Models.Editor
+﻿@using microSQL_Chian_Garcia.Instancia
+@model microSQL_Chian_Garcia.Models.Editor
 
 @{
-    ViewBag.Title = "Micro SQL";
+    ViewBag.Title = "Editor";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+@if (Data.Instancia.Ingreso == 1)
+{
+    <br />
+    @Html.Partial("_InfoArchivoInicial")
+}
+
+<br/>
+<h4>Editor</h4>
 
 @using (Html.BeginForm("Ejecutar", "Editor"))
 {
     @Html.AntiForgeryToken()
-    <h2></h2>
+    
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             <div class="col-md-4">
-                @Html.TextAreaFor(model => model.TextoPantalla,20,100, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.TextoPantalla, 20, 100, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.TextoPantalla, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-5 col-md-2">
-                <input type="submit" value="Ejecutar" class="btn btn-default" />
+                <input type="submit" value="Ejecutar" class="btn btn-success" />
             </div>
         </div>
     </div>

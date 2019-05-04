@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using microSQL_Chian_Garcia.Instancia;
 
 namespace microSQL_Chian_Garcia.Controllers
 {
@@ -11,6 +12,13 @@ namespace microSQL_Chian_Garcia.Controllers
         // GET: Editor
         public ActionResult Index()
         {
+            Data.Instancia.Ingreso++;
+            if (Data.Instancia.Ingreso == 1)
+            {
+                var path = Server.MapPath("~\\MicroSQL");
+                Data.Instancia.ArchivoReservadas.VerificarArchivoPalabrasReservadas(path);
+            }
+            
             return View();
         }
 
@@ -21,7 +29,6 @@ namespace microSQL_Chian_Garcia.Controllers
             try
             {
                 var texto = collection["TextoPantalla"];
-                // TODO: Add insert logic here
 
                 return RedirectToAction("Index");
             }
