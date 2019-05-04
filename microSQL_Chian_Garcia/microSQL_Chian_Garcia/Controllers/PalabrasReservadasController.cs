@@ -46,5 +46,13 @@ namespace microSQL_Chian_Garcia.Controllers
                 return View();
             }
         }
+
+        //Para regresar a las palabras reservadas originales
+        public ActionResult RegresarDefault()
+        {
+            Data.Instancia.ArchivoReservadas.PalabrasReservadasDefault();
+            Data.Instancia.ArchivoReservadas.EscribirArchivoPalabrasReservadas(Data.Instancia.PathDirectorio);
+            return RedirectToAction("TablaPalabras");
+        }
     }
 }

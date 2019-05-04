@@ -5,16 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<br/>
+<br />
 <h2>Palabras reservadas</h2>
-<br/>
+<br />
+
 <table class="table table-hover">
     <tr class="success">
         <th scope="col">Lenguaje original</th>
         <th scope="col">Lenguaje propio</th>
         <th scope="col"></th>
     </tr>
-    
+
     @foreach (var item in Data.Instancia.EditorTexto.PalabrasReservadas)
     {
         <tr>
@@ -25,9 +26,10 @@
                 @item.Value
             </td>
             <td>
-                @Html.ActionLink("Editar","Edit",new {id = item.Key})
+                @Html.ActionLink("Editar", "Edit", new { id = item.Key })
             </td>
         </tr>
     }
 
 </table>
+@Html.ActionLink("Restablecer valores predeterminados", "RegresarDefault")
