@@ -6,13 +6,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<br />
+
 @if (Data.Instancia.Ingreso == 1)
 {
-    <br />
     @Html.Partial("_InfoArchivoInicial")
 }
 
-<br/>
 <h4>Editor</h4>
 
 @using (Html.BeginForm("Ejecutar", "Editor"))

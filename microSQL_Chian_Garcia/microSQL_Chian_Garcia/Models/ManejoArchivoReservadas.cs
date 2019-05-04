@@ -9,9 +9,10 @@ namespace microSQL_Chian_Garcia.Models
 {
     public class ManejoArchivoReservadas
     {
-        public bool ExisteArchivoInicial { get; set; }
-        public bool ErrorEnArchivo { get; set; }
+        public bool ExisteArchivoInicial { get; set; } //Esta propiedad dice si existe un archivo inicial para cargar (sirve para la vista)
+        public bool ErrorEnArchivo { get; set; } //Propiedad para saber si el archivo encontrado fue leído correctamente o no
 
+        //Método que asigna al diccionario las palabras reservadas por default y crea el archivo
         public void PalabrasReservadasDefault(string pathDirectorio)
         {
             Data.Instancia.EditorTexto.PalabrasReservadas.Clear();
@@ -35,13 +36,15 @@ namespace microSQL_Chian_Garcia.Models
             }
         }
 
+        //Método para verificar si al iniciar el programa existe o no archivo MicroSQL.ini
         public void VerificarArchivoPalabrasReservadas(string pathDirectorio)
         {
+            //Si existe el directorio se busca el archvio en el directorio
             if (Directory.Exists(pathDirectorio))
             {
                 ExisteArchivoInicial = true;
             }
-            else
+            else //Se crea el directorio con las carpetas que servirán posteriormente y se manda a llamar al método de PalabrasReservadasDefault
             {
                 ExisteArchivoInicial = false;
                 Directory.CreateDirectory(pathDirectorio);
@@ -49,6 +52,7 @@ namespace microSQL_Chian_Garcia.Models
                 Directory.CreateDirectory(pathDirectorio+ "\\Tablas");
                 
                 PalabrasReservadasDefault(pathDirectorio);
+                ErrorEnArchivo = false;
             }
         }
     }

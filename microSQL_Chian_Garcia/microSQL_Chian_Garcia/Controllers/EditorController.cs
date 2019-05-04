@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using microSQL_Chian_Garcia.Instancia;
 
 namespace microSQL_Chian_Garcia.Controllers
 {
     public class EditorController : Controller
     {
-        // GET: Editor
+        //Es el primero que se carga
         public ActionResult Index()
         {
-            Data.Instancia.Ingreso++;
+            Data.Instancia.Ingreso++; //Sirve solamente para la vista para saber si muestra ventana emergente de carga exitosa
             if (Data.Instancia.Ingreso == 1)
             {
-                var path = Server.MapPath("~\\MicroSQL");
-                Data.Instancia.ArchivoReservadas.VerificarArchivoPalabrasReservadas(path);
+                var path = Server.MapPath("~\\MicroSQL"); //Se obtiene la direccion del equipo y de la carpeta del proyecto, luego se le agrega la carpeta
+                Data.Instancia.ArchivoReservadas.VerificarArchivoPalabrasReservadas(path); //Manda a verificar si existe un archivo inicial para leer
             }
-            
             return View();
         }
 

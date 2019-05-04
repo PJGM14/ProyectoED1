@@ -9,7 +9,7 @@ namespace microSQL_Chian_Garcia.Controllers
 {
     public class PalabrasReservadasController : Controller
     {
-        // GET: PalabrasReservadas
+        //Muestra el diccionario de palabras reservadas
         public ActionResult TablaPalabras()
         {
             if (Data.Instancia.Ingreso != 0)

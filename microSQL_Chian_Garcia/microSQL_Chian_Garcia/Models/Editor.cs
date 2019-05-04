@@ -19,8 +19,6 @@ namespace microSQL_Chian_Garcia.Models
         [Required(ErrorMessage = "No hay instrucciones para ser ejecutadas")]
         public string TextoPantalla { get; set; }
 
-        //public int Accion { get; set; }
-
         public Editor()
         {
             PalabrasReservadas = new Dictionary<string, string>();
