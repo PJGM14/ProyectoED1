@@ -13,23 +13,30 @@
     @Html.Partial("_InfoArchivoInicial")
 }
 
-<h3 class="col-lg-7 pull-right">Editor</h3>
-
 <div class="row">
+    
+    <h3 class="col-lg-4 pull-left">Tree View</h3>
+    <h3 class="col-lg-7 pull-right">Editor</h3>
+
     @using (Html.BeginForm("Ejecutar", "Editor"))
     {
         @Html.AntiForgeryToken()
 
         <div class="form-horizontal">
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.ValidationSummary(true, "", new {@class = "text-danger"})
             <div class="form-group">
-                <div class="col-lg-7 pull-right">
-                    @Html.TextAreaFor(model => model.TextoPantalla, 20, 100, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.TextoPantalla, "", new { @class = "text-danger" })
+
+                <div class="col-xs-3 pull-left">
+                    @Html.Partial("_TreeView")
                 </div>
-                
+
                 <div class="col-lg-7 pull-right">
-                    <input type="submit" value="Ejecutar" class="btn btn-success" />
+                    @Html.TextAreaFor(model => model.TextoPantalla, 20, 100, new {htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(model => model.TextoPantalla, "", new {@class = "text-danger"})
+                </div>
+
+                <div class="col-lg-7 pull-right">
+                    <input type="submit" value="Ejecutar" class="btn btn-success"/>
                 </div>
             </div>
         </div>
