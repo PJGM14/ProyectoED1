@@ -16,7 +16,7 @@ namespace microSQL_Chian_Garcia.Controllers
             Data.Instancia.Ingreso++; //Sirve solamente para la vista para saber si muestra ventana emergente de carga exitosa
             if (Data.Instancia.Ingreso == 1)
             {
-                var path = Server.MapPath("~\\MicroSQL"); //Se obtiene la direccion del equipo y de la carpeta del proyecto, luego se le agrega la carpeta
+                var path = Server.MapPath("~\\MicroSQL"); //Se obtiene la direccion del equipo y de la carpeta del proyecto, luego se le agrega la carpeta que tendrá que buscar
                 Data.Instancia.PathDirectorio = path;
                 Data.Instancia.ArchivoReservadas.VerificarArchivoPalabrasReservadas(path); //Manda a verificar si existe un archivo inicial para leer
             }
