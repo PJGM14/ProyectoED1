@@ -24,38 +24,5 @@ namespace microSQL_Chian_Garcia.Models
             PalabrasReservadas = new Dictionary<string, string>();
             TextoPantalla = "";
         }
-
-        public bool ModificarDiccionario(string rutaArchivo, ref string errorLinea)
-        {
-            var edicionCorrecta = false;
-
-            var csvData = File.ReadAllText(rutaArchivo);
-
-            var conFila = 0;
-
-            foreach (var fila in csvData.Split('\n'))
-            {
-                var _fila = fila.Trim();
-
-                if (!string.IsNullOrEmpty(_fila))
-                {
-                    conFila++;
-
-                    var matrizDatos = _fila.Split(',');
-
-                    if (matrizDatos.Length > 2)
-                    {
-                        errorLinea = conFila.ToString();
-                        edicionCorrecta = false;
-                    }
-                    else
-                    {
-                        PalabrasReservadas.Add(matrizDatos[0],matrizDatos[1]);
-                        edicionCorrecta = true;
-                    }
-                }
-            }
-            return edicionCorrecta;
-        }
     }
 }

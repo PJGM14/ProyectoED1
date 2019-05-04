@@ -29,7 +29,12 @@ namespace microSQL_Chian_Garcia.Controllers
         {
             try
             {
-                var texto = collection["TextoPantalla"];
+                Data.Instancia.EditorTexto.TextoPantalla = collection["TextoPantalla"];
+
+                //AQUI MANDAR A LLAMAR ALGUN MÉTODO QUE DEVUELVA ALGÚN BOOL PARA VER A QUE VISTA SE MANDA
+
+                //EL MÉTODO DEBERÍA DE ESTAR EN ALGÚN MODELO QUE HAGA LAS VERIFICACIONES, O BIEN EN EL MODELO EDITOR QUE NO POSEE NINGÚN MÉTODO
+
 
                 return RedirectToAction("Index");
             }
