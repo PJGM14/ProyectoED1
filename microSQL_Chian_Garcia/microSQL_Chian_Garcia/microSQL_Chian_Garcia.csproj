@@ -164,6 +164,7 @@
     <Content Include="Views\Editor\Index.cshtml" />
     <Content Include="Views\Shared\_InfoArchivoInicial.cshtml" />
     <Content Include="Views\PalabrasReservadas\TablaPalabras.cshtml" />
+    <Content Include="Views\PalabrasReservadas\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

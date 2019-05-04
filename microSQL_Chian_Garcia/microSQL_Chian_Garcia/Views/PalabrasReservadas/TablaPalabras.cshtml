@@ -1,7 +1,7 @@
 ﻿@using microSQL_Chian_Garcia.Instancia
 
 @{
-    ViewBag.Title = "TablaPalabras";
+    ViewBag.Title = "Palabras Reservadas";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -25,11 +25,9 @@
                 @item.Value
             </td>
             <td>
-                @Html.ActionLink("Editar","",new {id = item.Key})
+                @Html.ActionLink("Editar","Edit",new {id = item.Key})
             </td>
         </tr>
     }
 
 </table>
-
-<br/>

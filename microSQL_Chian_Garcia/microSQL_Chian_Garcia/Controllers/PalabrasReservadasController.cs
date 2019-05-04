@@ -24,20 +24,22 @@ namespace microSQL_Chian_Garcia.Controllers
         }
 
         // GET: PalabrasReservadas/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(string id)
         {
+            ViewBag.PalabraEditar = Data.Instancia.EditorTexto.PalabrasReservadas[id];
             return View();
         }
 
         // POST: PalabrasReservadas/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult Edit(string id, FormCollection collection)
         {
             try
             {
-                // TODO: Add update logic here
+                Data.Instancia.EditorTexto.PalabrasReservadas[id] = collection["NuevaPalabra"];
+                Data.Instancia.ArchivoReservadas.EscribirArchivoPalabrasReservadas(Data.Instancia.PathDirectorio);
 
-                return RedirectToAction("Index");
+                return RedirectToAction("TablaPalabras");
             }
             catch
             {
