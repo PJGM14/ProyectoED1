@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
+using Estructuras.NoLinearStructures.Trees.Arbol_B;
 using microSQL_Chian_Garcia.Instancia;
+using microSQL_Chian_Garcia.Models;
 
 namespace microSQL_Chian_Garcia.Controllers
 {
@@ -20,6 +22,10 @@ namespace microSQL_Chian_Garcia.Controllers
                 Data.Instancia.PathDirectorio = path;
                 Data.Instancia.ArchivoReservadas.VerificarArchivoPalabrasReservadas(path); //Manda a verificar si existe un archivo inicial para leer
             }
+
+            //Para prueba
+            Data.Instancia.AlumnoTree = new ArbolB<EjemploAlumno>(3, Data.Instancia.PathDirectorio + "\\ArbolesB\\Alumnos.txt", new FabricaEjemploAlumno());
+
             return View();
         }
 
@@ -36,11 +42,11 @@ namespace microSQL_Chian_Garcia.Controllers
                 //EL MÉTODO DEBERÍA DE ESTAR EN ALGÚN MODELO QUE HAGA LAS VERIFICACIONES, O BIEN EN EL MODELO EDITOR QUE NO POSEE NINGÚN MÉTODO
 
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Index"); //Cambiar esto
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index"); //Cambiar esto
             }
         }
     }
