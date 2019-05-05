@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "microSQL_Chian_Garcia", "microSQL_Chian_Garcia\microSQL_Chian_Garcia.csproj", "{272CA801-24F4-4BF9-A285-1288A7D05860}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estructuras", "Estructuras\Estructuras\Estructuras.csproj", "{E28E4F0C-9166-41FC-911B-0D8AE91EDC40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Estructuras", "Estructuras\Estructuras.csproj", "{E28E4F0C-9166-41FC-911B-0D8AE91EDC40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{272CA801-24F4-4BF9-A285-1288A7D05860}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{272CA801-24F4-4BF9-A285-1288A7D05860}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{272CA801-24F4-4BF9-A285-1288A7D05860}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{272CA801-24F4-4BF9-A285-1288A7D05860}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E28E4F0C-9166-41FC-911B-0D8AE91EDC40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E28E4F0C-9166-41FC-911B-0D8AE91EDC40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E28E4F0C-9166-41FC-911B-0D8AE91EDC40}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -26,6 +20,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {938C332C-F5F7-4FB0-BDB2-82A2A7DA6451}
+		SolutionGuid = {E5067493-B6FD-4787-A0FB-8A66B41886CC}
 	EndGlobalSection
 EndGlobal
