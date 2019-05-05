@@ -1,29 +1,103 @@
 ﻿@using microSQL_Chian_Garcia.Instancia
 
 
-<div class="btn-group">
-    <a href="#" class="btn btn-default">Tabla1</a>
-    <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-    <ul class="dropdown-menu">
-        <li><a href="#">Columna 1</a></li>
-        <li><a href="#">Columna 2</a></li>
-        <li><a href="#">Columna 3</a></li>
-    </ul>
-</div>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        ul, #myUL {
+            list-style-type: none;
+        }
 
+        #myUL {
+            padding: 0;
+        }
 
+        .caret {
+            cursor: pointer;
+            border-top: none;
+            margin-left: 25px;
+            -webkit-user-select: none; /* Safari 3.1+ */
+            -moz-user-select: none; /* Firefox 2+ */
+            -ms-user-select: none; /* IE 10+ */
+            user-select: none;
+        }
 
-@*@foreach (var item in Data.Instancia.EditorTexto.PalabrasReservadas)
-{
+            .caret:before {
+                content: "\2022";
+                color: #00bc8c;
+                display: inline;
+                margin-right: 6px;
+            }
 
-    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-        <button type="button" class="btn btn-primary">@item.Key</button>
-        <div class="btn-group" role="group">
-            <button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 36px, 0px);">
+        .caret-down:before {
+            -ms-transform: rotate(90deg); /* IE 9 */
+            -webkit-transform: rotate(90deg); /* Safari */
+            transform: rotate(90deg);
+        }
 
-                <a class="dropdown-item" href="#">@item.Value</a>
-            </div>
+        .nested {
+            display: none;
+            margin-left: 25px;
+        }
+
+        .active {
+            display: block;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel panel-warning">
+        <div class="panel-heading">
+            <h3 class="panel-title">Tablas creadas</h3>
+        </div>
+        <div class="panel-body">
+            <ul id="myUL">
+                <li>
+                    <span class="caret">Tabla1</span>
+                    <ul class="nested">
+                        <li>Columna1</li>
+                        <li>Columna2</li>
+                        @*<li>
+                                <span class="caret">Tea</span>
+                                <ul class="nested">
+                                    <li>Black Tea</li>
+                                    <li>White Tea</li>
+                                </ul>
+                            </li>*@
+                    </ul>
+                </li>
+                <li>
+                    <span class="caret">Tabla2</span>
+                    <ul class="nested">
+                        <li>Columna1</li>
+                        <li>Columna1</li>
+                        @*<li>
+                                <span class="caret">Tea</span>
+                                <ul class="nested">
+                                    <li>Black Tea</li>
+                                    <li>White Tea</li>
+                                </ul>
+                            </li>*@
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
-}*@
+
+
+
+
+    <script>
+        var toggler = document.getElementsByClassName("caret");
+        var i;
+
+        for (i = 0; i < toggler.length; i++) {
+            toggler[i].addEventListener("click", function () {
+                this.parentElement.querySelector(".nested").classList.toggle("active");
+                this.classList.toggle("caret-down");
+            });
+        }
+    </script>
+
+</body>
