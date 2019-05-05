@@ -70,7 +70,7 @@ namespace microSQL_Chian_Garcia.Models
                                 {
                                     if (Data.Instancia.EditorTexto.PalabrasReservadas.ContainsKey(campoLinea[0]))
                                     {
-                                        Data.Instancia.EditorTexto.PalabrasReservadas[campoLinea[0]] = campoLinea[1];
+                                        Data.Instancia.EditorTexto.PalabrasReservadas[campoLinea[0]] = campoLinea[1].ToUpper();
                                     }
                                     else
                                     {
