@@ -21,10 +21,14 @@ namespace microSQL_Chian_Garcia.Controllers
                 var path = Server.MapPath("~\\MicroSQL"); //Se obtiene la direccion del equipo y de la carpeta del proyecto, luego se le agrega la carpeta que tendrá que buscar
                 Data.Instancia.PathDirectorio = path;
                 Data.Instancia.ArchivoReservadas.VerificarArchivoPalabrasReservadas(path); //Manda a verificar si existe un archivo inicial para leer
-            }
 
-            //Para prueba
-            Data.Instancia.AlumnoTree = new ArbolB<EjemploAlumno>(3, Data.Instancia.PathDirectorio + "\\ArbolesB\\Alumnos.txt", new FabricaEjemploAlumno());
+                //Para prueba
+                Data.Instancia.AlumnoTree = new ArbolB<EjemploAlumno>(3, Data.Instancia.PathDirectorio + "\\ArbolesB\\Alumnos.txt", new FabricaEjemploAlumno());
+            }
+            else
+            {
+                Data.Instancia.AlumnoTree.Cerrar();
+            }
 
             return View();
         }
