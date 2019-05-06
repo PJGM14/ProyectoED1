@@ -20,7 +20,7 @@ namespace microSQL_Chian_Garcia.Controllers
         // GET: EjemploAlumno/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            return RedirectToAction("Create");
         }
 
         // GET: EjemploAlumno/Create
@@ -54,7 +54,7 @@ namespace microSQL_Chian_Garcia.Controllers
         // GET: EjemploAlumno/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            return RedirectToAction("Create");
         }
 
         // POST: EjemploAlumno/Edit/5
@@ -69,14 +69,14 @@ namespace microSQL_Chian_Garcia.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("Create");
             }
         }
 
         // GET: EjemploAlumno/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            return RedirectToAction("Create");
         }
 
         // POST: EjemploAlumno/Delete/5
@@ -91,7 +91,7 @@ namespace microSQL_Chian_Garcia.Controllers
             }
             catch
             {
-                return View();
+                return RedirectToAction("Create");
             }
         }
     }
