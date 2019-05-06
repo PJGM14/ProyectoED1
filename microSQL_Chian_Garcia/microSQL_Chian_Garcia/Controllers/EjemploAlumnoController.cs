@@ -43,7 +43,7 @@ namespace microSQL_Chian_Garcia.Controllers
                 Data.Instancia.AlumnoTree.Agregar(Alumno.Nombre.Trim('x'),Alumno,"");
                 Data.Instancia.AlumnoTree.Cerrar();
 
-                return RedirectToAction("Create","EjemploAlumno");
+                return RedirectToAction("Index","Editor");
             }
             catch
             {

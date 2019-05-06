@@ -1,0 +1,9 @@
+00000000002
+00000000004
+00000000000
+00000000003
+00000000002
+00000000000|00000000002|||-0000000001|-0000000001|-0000000001|||xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxPizza|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|||xxxxxxxxxxxxxxxPizza-00000000006665644544|xxxxxxxxxxxxxxxxHola-00000000000009898989|
+00000000001|00000000002|||-0000000001|-0000000001|-0000000001|||xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxRicardo Chian|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|||xxxxxxxRicardo Chian-00000000000045357861|xxxxxxxxxxxxxxxxxxxx-00000000000000000000|
+00000000002|-0000000001|||00000000000|00000000001|00000000003|||xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxCalcium Acetate|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxHola|||xxxxxCalcium Acetate-00000000000000001234|xxxxxxxxxxxxxxxxHola-00000000000009898989|
+00000000003|00000000002|||-0000000001|-0000000001|-0000000001|||xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxLuis|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|||xxxxxxxxxxxxxxxxLuis-00000000000000000911|xxxxxxxxxxxxxxxxxxxx-00000000000000000000|
