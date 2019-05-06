@@ -23,12 +23,13 @@ namespace microSQL_Chian_Garcia.Controllers
                 Data.Instancia.ArchivoReservadas.VerificarArchivoPalabrasReservadas(path); //Manda a verificar si existe un archivo inicial para leer
 
                 //Para prueba
-                Data.Instancia.AlumnoTree = new ArbolB<EjemploAlumno>(3, Data.Instancia.PathDirectorio + "\\ArbolesB\\Alumnos.txt", new FabricaEjemploAlumno());
+                
             }
-            else
-            {
-                Data.Instancia.AlumnoTree.Cerrar();
-            }
+            Data.Instancia.AlumnoTree = new ArbolB<EjemploAlumno>(3, Data.Instancia.PathDirectorio + "\\ArbolesB\\Alumnos.arbolB", new FabricaEjemploAlumno());
+            //else
+            //{
+            //    Data.Instancia.AlumnoTree.Cerrar();
+            //}
 
             return View();
         }

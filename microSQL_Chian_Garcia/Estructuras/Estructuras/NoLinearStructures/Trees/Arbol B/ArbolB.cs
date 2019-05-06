@@ -361,6 +361,7 @@ namespace Estructuras.NoLinearStructures.Trees.Arbol_B
 
         public override void Cerrar()
         {
+            
             _archivo.Close();
         }
 

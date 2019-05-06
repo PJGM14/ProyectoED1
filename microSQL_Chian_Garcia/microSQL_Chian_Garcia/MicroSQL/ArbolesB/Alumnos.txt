@@ -1,6 +1,0 @@
-00000000000
-00000000001
-00000000000
-00000000003
-00000000001
-00000000000|-0000000001|||-0000000001|-0000000001|-0000000001|||xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx|||xxxxxxxxxxxxxxxxxxxx-00000000000000000000|xxxxxxxxxxxxxxxxxxxx-00000000000000000000|
