@@ -12,8 +12,7 @@ namespace microSQL_Chian_Garcia.Models
     {
         public bool ExisteArchivoInicial { get; set; } //Esta propiedad dice si existe un archivo inicial para cargar (sirve para la vista)
         public bool ErrorEnArchivo { get; set; } //Propiedad para saber si el archivo encontrado fue leído correctamente o no
-        
-
+       
         //El diccionario de palabras reservadas toma valores predeterminados
         public void PalabrasReservadasDefault()
         {

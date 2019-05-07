@@ -130,7 +130,9 @@
     <Compile Include="Models\Editor.cs" />
     <Compile Include="Models\EjemploAlumno.cs" />
     <Compile Include="Models\FabricaEjemploAlumno.cs" />
+    <Compile Include="Models\FabricaRegistro.cs" />
     <Compile Include="Models\ManejoArchivoReservadas.cs" />
+    <Compile Include="Models\Registro.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

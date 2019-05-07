@@ -19,10 +19,21 @@ namespace microSQL_Chian_Garcia.Models
         [Required(ErrorMessage = "No hay instrucciones para ser ejecutadas")]
         public string TextoPantalla { get; set; }
 
+        //Esta lista contiene los tipos de datos que son permitidos en el programa
+        public List<string> TipoDato { get; set; }
+
         public Editor()
         {
             PalabrasReservadas = new Dictionary<string, string>();
             TextoPantalla = "";
+
+            TipoDato = new List<string>();
+
+            TipoDato.Add("INT");
+            TipoDato.Add("PRIMARY");
+            TipoDato.Add("KEY");
+            TipoDato.Add("VARCHAR[100]");
+            TipoDato.Add("DATETIME");
         }
     }
 }
