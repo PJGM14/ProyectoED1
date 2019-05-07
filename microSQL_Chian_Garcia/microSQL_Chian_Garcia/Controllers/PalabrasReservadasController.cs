@@ -26,6 +26,7 @@ namespace microSQL_Chian_Garcia.Controllers
         // GET: PalabrasReservadas/Edit/5
         public ActionResult Edit(string id)
         {
+            //Manda en una variable temporal a la vista la palabra reservada en lenguaje propio a editar
             ViewBag.PalabraEditar = Data.Instancia.EditorTexto.PalabrasReservadas[id];
             return View();
         }
@@ -36,6 +37,7 @@ namespace microSQL_Chian_Garcia.Controllers
         {
             try
             {
+                //Verifica si la palabra nueva existe o no en lenguaje original o en el lenguaje propio
                 if ((!Data.Instancia.EditorTexto.PalabrasReservadas.ContainsValue(collection["NuevaPalabra"].ToUpper())) && (!Data.Instancia.EditorTexto.PalabrasReservadas.ContainsKey(collection["NuevaPalabra"].ToUpper())))
                 {
                     Data.Instancia.EditorTexto.PalabrasReservadas[id] = collection["NuevaPalabra"].ToUpper();
