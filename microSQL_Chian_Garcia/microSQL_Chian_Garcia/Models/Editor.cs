@@ -24,5 +24,8 @@ namespace microSQL_Chian_Garcia.Models
             PalabrasReservadas = new Dictionary<string, string>();
             TextoPantalla = "";
         }
+
+
+
     }
 }
