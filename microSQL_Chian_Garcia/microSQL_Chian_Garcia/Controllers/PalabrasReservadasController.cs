@@ -36,10 +36,17 @@ namespace microSQL_Chian_Garcia.Controllers
         {
             try
             {
-                Data.Instancia.EditorTexto.PalabrasReservadas[id] = collection["NuevaPalabra"].ToUpper();
-                Data.Instancia.ArchivoReservadas.EscribirArchivoPalabrasReservadas(Data.Instancia.PathDirectorio);
-
-                return RedirectToAction("TablaPalabras");
+                if ((!Data.Instancia.EditorTexto.PalabrasReservadas.ContainsValue(collection["NuevaPalabra"].ToUpper())) && (!Data.Instancia.EditorTexto.PalabrasReservadas.ContainsKey(collection["NuevaPalabra"].ToUpper())))
+                {
+                    Data.Instancia.EditorTexto.PalabrasReservadas[id] = collection["NuevaPalabra"].ToUpper();
+                    Data.Instancia.ArchivoReservadas.EscribirArchivoPalabrasReservadas(Data.Instancia.PathDirectorio);
+                    return RedirectToAction("TablaPalabras");
+                }
+                else
+                {
+                    return RedirectToAction("Edit");
+                }
+                
             }
             catch
             {
