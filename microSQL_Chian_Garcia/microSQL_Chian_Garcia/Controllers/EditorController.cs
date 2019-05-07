@@ -24,7 +24,7 @@ namespace microSQL_Chian_Garcia.Controllers
             }
 
             //Para prueba
-            Data.Instancia.AlumnoTree = new ArbolB<EjemploAlumno>(3, Data.Instancia.PathDirectorio + "\\ArbolesB\\Alumnos.txt", new FabricaEjemploAlumno());
+            Data.Instancia.AlumnoTree = new ArbolB<EjemploAlumno>(5, Data.Instancia.PathDirectorio + "\\ArbolesB\\Alumnos.txt", new FabricaEjemploAlumno());
 
             return View();
         }
