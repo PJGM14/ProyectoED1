@@ -58,10 +58,7 @@ namespace microSQL_Chian_Garcia.Models
             {
                 foreach (var nombre in direccionesArchivo)
                 {
-                    //PRUEBA PARA LA RAMA DE PABLO
-                    string y = "";
-
-                    int i = 0;
+                    
                 }
             }
         }
