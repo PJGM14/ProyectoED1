@@ -83,13 +83,8 @@ namespace microSQL_Chian_Garcia.Models
                             ContenidoTablas[nombreTabla].Add(campoLinea[0],campoLinea[1]);
                         }
                     }
-                    else
-                    {
-                        break;
-                    }
                 }
             }
         }
-
     }
 }
