@@ -54,34 +54,20 @@
         </div>
         <div class="panel-body">
             <ul id="myUL">
-                <li>
-                    <span class="caret">Tabla1</span>
-                    <ul class="nested">
-                        <li>Columna1</li>
-                        <li>Columna2</li>
-                        @*<li>
-                                <span class="caret">Tea</span>
-                                <ul class="nested">
-                                    <li>Black Tea</li>
-                                    <li>White Tea</li>
-                                </ul>
-                            </li>*@
-                    </ul>
-                </li>
-                <li>
-                    <span class="caret">Tabla2</span>
-                    <ul class="nested">
-                        <li>Columna1</li>
-                        <li>Columna1</li>
-                        @*<li>
-                                <span class="caret">Tea</span>
-                                <ul class="nested">
-                                    <li>Black Tea</li>
-                                    <li>White Tea</li>
-                                </ul>
-                            </li>*@
-                    </ul>
-                </li>
+                
+                @foreach (var item in Data.Instancia.EditorTexto.ContenidoTablas)
+                {
+                    <li>
+                        <span class="caret" style="font-size: 15px">@item.Key</span>
+                        <ul class="nested">
+                            
+                            @foreach (var contenido in item.Value)
+                            {
+                                <li style="font-size: 11px">@contenido.Key,@contenido.Value</li>
+                            }
+                        </ul>
+                    </li>                    
+                }
             </ul>
         </div>
     </div>
