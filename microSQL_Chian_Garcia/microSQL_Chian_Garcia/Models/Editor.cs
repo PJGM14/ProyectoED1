@@ -63,10 +63,5 @@ namespace microSQL_Chian_Garcia.Models
             }
         }
 
-<<<<<<< HEAD
-
-
-=======
->>>>>>> e85ba33e31916212248a7060d03dc44b9acc9f90
     }
 }
