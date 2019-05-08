@@ -60,6 +60,8 @@ namespace microSQL_Chian_Garcia.Models
                 {
                     //PRUEBA PARA LA RAMA DE PABLO
                     string y = "";
+
+                    int i = 0;
                 }
             }
         }
