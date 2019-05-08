@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using Microsoft.Ajax.Utilities;
 using System.IO;
+using Estructuras.NoLinearStructures.Trees.Arbol_B;
 using microSQL_Chian_Garcia.Instancia;
 
 namespace microSQL_Chian_Garcia.Models
@@ -27,6 +28,8 @@ namespace microSQL_Chian_Garcia.Models
         //               <nombreTabla,(nombreColumna,TipoDato)>
         public Dictionary<string,Dictionary<string,string>> ContenidoTablas { get; set; }
 
+        public bool EjecucionCorrecta { get; set; }
+
         public Editor()
         {
             PalabrasReservadas = new Dictionary<string, string>();
@@ -41,6 +44,8 @@ namespace microSQL_Chian_Garcia.Models
             TipoDato.Add("DATETIME");
 
             ContenidoTablas = new Dictionary<string, Dictionary<string, string>>();
+
+            EjecucionCorrecta = false;
         }
 
         //Método que obtiene la información de cada tabla que está en la carpeta de ~MicroSQL/Tablas
@@ -85,6 +90,51 @@ namespace microSQL_Chian_Garcia.Models
                     }
                 }
             }
+        }
+
+        public bool CrearTabla(Dictionary<string,string> contenidoCrearTabla)
+        {
+            var nombre = "";
+            var detener = false;
+            
+            var dicContenido = new Dictionary<string, string>();
+
+            foreach (var item in contenidoCrearTabla)
+            {
+                if (item.Value == "NOMBRE")
+                {
+                    nombre = item.Key;
+
+                    if (File.Exists(Data.Instancia.PathDirectorio+"\\Tablas\\" + nombre + ".tabla"))
+                    {
+                        EjecucionCorrecta = false;
+                        detener = true;
+                        break;
+                    }
+                }
+                else
+                {
+                    dicContenido.Add(item.Key,item.Value);
+
+                    using (StreamWriter file = new StreamWriter(Data.Instancia.PathDirectorio + "\\Tablas\\" + nombre + ".tabla", true))
+                    {
+                        file.WriteLine(item.Key +  "," + item.Value);
+                    }
+                }
+            }
+
+            if (detener == false)
+            {
+                Data.Instancia.EditorTexto.ContenidoTablas.Add(nombre, dicContenido);
+
+                var path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombre + ".arbolB";
+                Data.Instancia.TreeResgitro = new ArbolB<Registro>(4,path,new FabricaRegistro());
+                
+                EjecucionCorrecta = true;
+                ObtenerTablas();
+            }
+
+            return EjecucionCorrecta;
         }
     }
 }

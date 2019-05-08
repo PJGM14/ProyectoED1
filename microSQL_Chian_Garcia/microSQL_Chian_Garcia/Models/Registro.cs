@@ -21,9 +21,9 @@ namespace microSQL_Chian_Garcia.Models
         public string Cadena3 { get; set; }
 
         //15 caracteres
-        public DateTime Tiempo1 { get; set; }
-        public DateTime Tiempo2 { get; set; }
-        public DateTime Tiempo3 { get; set; }
+        public string Tiempo1 { get; set; }
+        public string Tiempo2 { get; set; }
+        public string Tiempo3 { get; set; }
 
         //355 de datos + 19 separadores
         private const string FormatoConst = "";
@@ -44,12 +44,12 @@ namespace microSQL_Chian_Garcia.Models
             Cadena2 = "";
             Cadena3 = "";
 
-            Tiempo1 = Convert.ToDateTime("00/00/00");
-            Tiempo2 = Convert.ToDateTime("00/00/00");
-            Tiempo3 = Convert.ToDateTime("00/00/00");
+            Tiempo1 = "";
+            Tiempo2 = "";
+            Tiempo3 = "";
         }
 
-        public Registro(int identificador, int entero1, int entero2, int entero3, string cadena1, string cadena2, string cadena3, DateTime tiempo1, DateTime tiempo2, DateTime tiempo3)
+        public Registro(int identificador, int entero1, int entero2, int entero3, string cadena1, string cadena2, string cadena3, string tiempo1, string tiempo2, string tiempo3)
         {
             Identificador = identificador;
             Entero1 = entero1;
@@ -69,26 +69,26 @@ namespace microSQL_Chian_Garcia.Models
         {
             var sb = new StringBuilder();
             sb.Append(Identificador.ToString().PadLeft(10, '0'));
-            sb.Append('¬');
+            sb.Append('-');
             sb.Append(Entero1.ToString().PadLeft(10, '0'));
-            sb.Append('¬');
+            sb.Append('-');
             sb.Append(Entero2.ToString().PadLeft(10, '0'));
-            sb.Append('¬');
+            sb.Append('-');
             sb.Append(Entero3.ToString().PadLeft(10, '0'));
-            sb.Append('¬');
+            sb.Append('-');
 
             sb.Append(Cadena1.PadLeft(100, '$'));
-            sb.Append('¬');
+            sb.Append('-');
             sb.Append(Cadena2.PadLeft(100, '$'));
-            sb.Append('¬');
+            sb.Append('-');
             sb.Append(Cadena3.PadLeft(100, '$'));
-            sb.Append('¬');
+            sb.Append('-');
 
-            sb.Append(Tiempo1.ToString("d").PadLeft(15, '0'));
-            sb.Append('¬');
-            sb.Append(Tiempo2.ToString("d").PadLeft(15, '0'));
-            sb.Append('¬');
-            sb.Append(Tiempo3.ToString("d").PadLeft(15, '0'));
+            sb.Append(Tiempo1.PadLeft(15, '$'));
+            sb.Append('-');
+            sb.Append(Tiempo2.PadLeft(15, '$'));
+            sb.Append('-');
+            sb.Append(Tiempo3.PadLeft(15, '$'));
 
             return sb.ToString();
         }

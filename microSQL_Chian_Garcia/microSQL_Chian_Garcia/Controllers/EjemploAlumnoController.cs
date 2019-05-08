@@ -40,8 +40,8 @@ namespace microSQL_Chian_Garcia.Controllers
                 var Alumno = new EjemploAlumno(collection["Nombre"],long.Parse(collection["NumTelefono"]));
 
 
-                Data.Instancia.AlumnoTree.Agregar(Alumno.Nombre.Trim('x'),Alumno,"");
-                Data.Instancia.AlumnoTree.Cerrar();
+                //Data.Instancia.AlumnoTree.Agregar(Alumno.Nombre.Trim('x'),Alumno,"");
+                //Data.Instancia.AlumnoTree.Cerrar();
 
                 return RedirectToAction("Index","Editor");
             }

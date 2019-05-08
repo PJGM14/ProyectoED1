@@ -22,9 +22,9 @@ namespace microSQL_Chian_Garcia.Models
             registro.Cadena2 = datos[6].Trim();
             registro.Cadena3 = datos[7].Trim();
 
-            registro.Tiempo1 = DateTime.Parse(datos[8]);
-            registro.Tiempo1 = DateTime.Parse(datos[9]);
-            registro.Tiempo1 = DateTime.Parse(datos[10]);
+            registro.Tiempo1 = datos[8];
+            registro.Tiempo1 = datos[9];
+            registro.Tiempo1 = datos[10];
 
             return registro;
         }

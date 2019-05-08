@@ -25,7 +25,7 @@ namespace microSQL_Chian_Garcia.Controllers
             }
 
             //Para prueba
-            Data.Instancia.AlumnoTree = new ArbolB<EjemploAlumno>(5, Data.Instancia.PathDirectorio + "\\ArbolesB\\Alumnos.txt", new FabricaEjemploAlumno());
+            //Data.Instancia.AlumnoTree = new ArbolB<EjemploAlumno>(5, Data.Instancia.PathDirectorio + "\\ArbolesB\\Alumnos.txt", new FabricaEjemploAlumno());
 
             return View();
         }
@@ -42,6 +42,14 @@ namespace microSQL_Chian_Garcia.Controllers
 
                 //EL MÉTODO DEBERÍA DE ESTAR EN ALGÚN MODELO QUE HAGA LAS VERIFICACIONES, O BIEN EN EL MODELO EDITOR QUE NO POSEE NINGÚN MÉTODO
 
+                var dicPruebaTablas = new Dictionary<string,string>();
+
+                dicPruebaTablas.Add("MOUSE","NOMBRE");
+                dicPruebaTablas.Add("ID", "INT PRIMARY KEY");
+                dicPruebaTablas.Add("MARCA", "VARCHAR[100]");
+                dicPruebaTablas.Add("COLOR", "VARCHAR[100]");
+
+                Data.Instancia.EditorTexto.CrearTabla(dicPruebaTablas);
 
                 return RedirectToAction("Index"); //Cambiar esto
             }

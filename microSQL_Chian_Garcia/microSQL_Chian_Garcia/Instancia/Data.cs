@@ -30,6 +30,6 @@ namespace microSQL_Chian_Garcia.Instancia
         public Editor EditorTexto = new Editor();
 
         //Para probar el arbol
-        public ArbolB<EjemploAlumno> AlumnoTree;
+        public ArbolB<Registro> TreeResgitro;
     }
 }
