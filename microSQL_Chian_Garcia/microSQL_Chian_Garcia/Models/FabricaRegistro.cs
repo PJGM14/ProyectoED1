@@ -11,20 +11,20 @@ namespace microSQL_Chian_Garcia.Models
         public Registro Fabricar(string textoTamañoFijo)
         {
             var registro = new Registro();
-            var datos = textoTamañoFijo.Split('-');
+            var datos = textoTamañoFijo.Split('~');
 
-            registro.Identificador = Int32.Parse(datos[1].Trim());
-            registro.Entero1 = Int32.Parse(datos[2].Trim());
-            registro.Entero2 = Int32.Parse(datos[3].Trim());
-            registro.Entero3 = Int32.Parse(datos[4].Trim());
+            registro.Identificador = Int32.Parse(datos[0].Trim());
+            registro.Entero1 = Int32.Parse(datos[1].Trim());
+            registro.Entero2 = Int32.Parse(datos[2].Trim());
+            registro.Entero3 = Int32.Parse(datos[3].Trim());
 
-            registro.Cadena1 = datos[5].Trim();
-            registro.Cadena2 = datos[6].Trim();
-            registro.Cadena3 = datos[7].Trim();
+            registro.Cadena1 = datos[4].Trim();
+            registro.Cadena2 = datos[5].Trim();
+            registro.Cadena3 = datos[6].Trim();
 
+            registro.Tiempo1 = datos[7];
             registro.Tiempo1 = datos[8];
             registro.Tiempo1 = datos[9];
-            registro.Tiempo1 = datos[10];
 
             return registro;
         }

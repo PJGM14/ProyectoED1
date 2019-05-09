@@ -14,7 +14,7 @@ namespace microSQL_Chian_Garcia.Models
     {
         //Diccionario de palabras reservadas que puede ser modificado en cualquier
         //momento de la ejecución del programa
-        public Dictionary<string,string> PalabrasReservadas { get; set; }
+        public Dictionary<string, string> PalabrasReservadas { get; set; }
 
         //Propiedad que va guardar todo el texto que se escriba en pantalla (instrucciones de ejecución)
         [DataType(DataType.MultilineText)]
@@ -26,7 +26,7 @@ namespace microSQL_Chian_Garcia.Models
 
         //Diccionario que tiene el contenido de las tablas
         //               <nombreTabla,(nombreColumna,TipoDato)>
-        public Dictionary<string,Dictionary<string,string>> ContenidoTablas { get; set; }
+        public Dictionary<string, Dictionary<string, string>> ContenidoTablas { get; set; }
 
         public bool EjecucionCorrecta { get; set; }
 
@@ -49,7 +49,7 @@ namespace microSQL_Chian_Garcia.Models
         }
 
         //Método que obtiene la información de cada tabla que está en la carpeta de ~MicroSQL/Tablas
-        public void ObtenerTablas()         
+        public void ObtenerTablas()
         {
             //Limpia el diccionario que contiene la info de las tablas
             ContenidoTablas.Clear();
@@ -79,24 +79,24 @@ namespace microSQL_Chian_Garcia.Models
 
                         var nombreTabla = Path.GetFileName(nombre).Split('.')[0];
 
-                        ContenidoTablas.Add(nombreTabla,listaColumnas);
+                        ContenidoTablas.Add(nombreTabla, listaColumnas);
 
                         foreach (var linea in lineas)
                         {
                             var campoLinea = linea.Split(',');
 
-                            ContenidoTablas[nombreTabla].Add(campoLinea[0],campoLinea[1]);
+                            ContenidoTablas[nombreTabla].Add(campoLinea[0], campoLinea[1]);
                         }
                     }
                 }
             }
         }
 
-        public bool CrearTabla(Dictionary<string,string> contenidoCrearTabla)
+        public bool CrearTabla(Dictionary<string, string> contenidoCrearTabla)
         {
             var nombre = "";
             var detener = false;
-            
+
             var dicContenido = new Dictionary<string, string>();
 
             foreach (var item in contenidoCrearTabla)
@@ -105,7 +105,7 @@ namespace microSQL_Chian_Garcia.Models
                 {
                     nombre = item.Key;
 
-                    if (File.Exists(Data.Instancia.PathDirectorio+"\\Tablas\\" + nombre + ".tabla"))
+                    if (File.Exists(Data.Instancia.PathDirectorio + "\\Tablas\\" + nombre + ".tabla"))
                     {
                         EjecucionCorrecta = false;
                         detener = true;
@@ -114,11 +114,11 @@ namespace microSQL_Chian_Garcia.Models
                 }
                 else
                 {
-                    dicContenido.Add(item.Key,item.Value);
+                    dicContenido.Add(item.Key, item.Value);
 
                     using (StreamWriter file = new StreamWriter(Data.Instancia.PathDirectorio + "\\Tablas\\" + nombre + ".tabla", true))
                     {
-                        file.WriteLine(item.Key +  "," + item.Value);
+                        file.WriteLine(item.Key + "," + item.Value);
                     }
                 }
             }
@@ -128,13 +128,35 @@ namespace microSQL_Chian_Garcia.Models
                 Data.Instancia.EditorTexto.ContenidoTablas.Add(nombre, dicContenido);
 
                 var path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombre + ".arbolB";
-                Data.Instancia.TreeResgitro = new ArbolB<Registro>(4,path,new FabricaRegistro());
-                
+                Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
+                Data.Instancia.TreeResgitro.Cerrar();
+
                 EjecucionCorrecta = true;
                 ObtenerTablas();
             }
 
             return EjecucionCorrecta;
+        }
+
+        public void MandarDato()
+        {
+            var prueba = new Registro(12, 40, 0, 0, "", "Hola", "Que", "15/02/2019", "", "");
+
+            var path = Data.Instancia.PathDirectorio + "\\ArbolesB\\MOUSE.arbolB";
+            Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
+            Data.Instancia.TreeResgitro.Agregar(prueba.Identificador.ToString().Trim('x'), prueba, "");
+            
+            var prueba2 = new Registro(13, 43434, 34344, 3434, "Com", "pu", "tadora", "25/02/2909", "", "");
+            Data.Instancia.TreeResgitro.Agregar(prueba2.Identificador.ToString().Trim('x'),prueba2,"");
+            Data.Instancia.TreeResgitro.Cerrar();
+        }
+
+        public object ObtenerDato()
+        {
+            var path = Data.Instancia.PathDirectorio + "\\ArbolesB\\MOUSE.arbolB";
+
+            Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
+            return Data.Instancia.TreeResgitro.Obtener("12");
         }
     }
 }

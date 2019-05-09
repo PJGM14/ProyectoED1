@@ -20,17 +20,17 @@ namespace microSQL_Chian_Garcia.Models
         public string Cadena2 { get; set; }
         public string Cadena3 { get; set; }
 
-        //15 caracteres
+        //25 caracteres
         public string Tiempo1 { get; set; }
         public string Tiempo2 { get; set; }
         public string Tiempo3 { get; set; }
 
-        //355 de datos + 19 separadores
+        //415 de datos + 9 separadores
         private const string FormatoConst = "";
 
         public int FixedSizeText
         {
-            get { return 364; }
+            get { return 424; }
         }
 
         public Registro()
@@ -69,26 +69,26 @@ namespace microSQL_Chian_Garcia.Models
         {
             var sb = new StringBuilder();
             sb.Append(Identificador.ToString().PadLeft(10, '0'));
-            sb.Append('-');
+            sb.Append('~');
             sb.Append(Entero1.ToString().PadLeft(10, '0'));
-            sb.Append('-');
+            sb.Append('~');
             sb.Append(Entero2.ToString().PadLeft(10, '0'));
-            sb.Append('-');
+            sb.Append('~');
             sb.Append(Entero3.ToString().PadLeft(10, '0'));
-            sb.Append('-');
+            sb.Append('~');
 
             sb.Append(Cadena1.PadLeft(100, '$'));
-            sb.Append('-');
+            sb.Append('~');
             sb.Append(Cadena2.PadLeft(100, '$'));
-            sb.Append('-');
+            sb.Append('~');
             sb.Append(Cadena3.PadLeft(100, '$'));
-            sb.Append('-');
+            sb.Append('~');
 
-            sb.Append(Tiempo1.PadLeft(15, '$'));
-            sb.Append('-');
-            sb.Append(Tiempo2.PadLeft(15, '$'));
-            sb.Append('-');
-            sb.Append(Tiempo3.PadLeft(15, '$'));
+            sb.Append(Tiempo1.PadLeft(25, '$'));
+            sb.Append('~');
+            sb.Append(Tiempo2.PadLeft(25, '$'));
+            sb.Append('~');
+            sb.Append(Tiempo3.PadLeft(25, '$'));
 
             return sb.ToString();
         }

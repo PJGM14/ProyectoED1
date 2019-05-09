@@ -51,6 +51,10 @@ namespace microSQL_Chian_Garcia.Controllers
 
                 Data.Instancia.EditorTexto.CrearTabla(dicPruebaTablas);
 
+                Data.Instancia.EditorTexto.MandarDato();
+
+                var obj = Data.Instancia.EditorTexto.ObtenerDato();
+
                 return RedirectToAction("Index"); //Cambiar esto
             }
             catch
