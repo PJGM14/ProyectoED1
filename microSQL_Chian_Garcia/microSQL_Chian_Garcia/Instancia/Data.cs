@@ -23,7 +23,7 @@ namespace microSQL_Chian_Garcia.Instancia
                 return _instancia;
             }
         }
-
+        
         public string PathDirectorio = "";
         public int Ingreso = 0;
         public ManejoArchivoReservadas ArchivoReservadas = new ManejoArchivoReservadas();
