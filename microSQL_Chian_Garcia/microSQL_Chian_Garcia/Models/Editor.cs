@@ -36,6 +36,8 @@ namespace microSQL_Chian_Garcia.Models
 
         public List<string> PropiedadesMostrar;
 
+        public int contadorMostrar = 0;
+
         //CONSTRUCTOR
         public Editor()
         {
@@ -72,6 +74,7 @@ namespace microSQL_Chian_Garcia.Models
             code = code.Trim();
 
             //SE REEMPLAZA TODO EL CODIGO PARA QUE QUEDE EN UNA SOLA LINEA
+            code = code.Replace("=", " = ");
             code = code.Replace(",", ", ");
             code = code.Replace("\n", " ");
             code = code.Replace("(", " ( ");
@@ -101,6 +104,7 @@ namespace microSQL_Chian_Garcia.Models
                             //CREATE TABLE
                             if ((instructionWords[0] + " " + instructionWords[1]).Equals("CREATE TABLE") || (instructionWords[0] + " " + instructionWords[1]).Equals(PalabrasReservadas["CREATE TABLE"]))
                             {
+                                crearTablaValores.Clear();
                                 CreateTable(ref crearTablaValores, ref instructionWords, longitud);
 
                                 EjecucionCorrecta = CrearTabla(crearTablaValores);
@@ -110,6 +114,7 @@ namespace microSQL_Chian_Garcia.Models
                             //INSERT INTO
                             if ((instructionWords[0] + " " + instructionWords[1]).Equals("INSERT INTO") || (instructionWords[0] + " " + instructionWords[1]).Equals(PalabrasReservadas["INSERT INTO"]))
                             {
+                                insertarEnTablaValores.Clear();
                                 InsertInto(ref insertarEnTablaValores, ref instructionWords, longitud);
 
                                 EjecucionCorrecta = InsertarEn(insertarEnTablaValores);
@@ -118,13 +123,16 @@ namespace microSQL_Chian_Garcia.Models
                             //SELECT FROM
                             if (instructionWords[0].Equals("SELECT") || instructionWords[0].Equals(PalabrasReservadas["SELECT"]))
                             {
+                                seleccionarDeTabla.Clear();
                                 SelectFrom(ref seleccionarDeTabla, ref instructionWords, longitud);
+                                Data.Instancia.EditorTexto.contadorMostrar = 0;
                                 SeleccionarDe(seleccionarDeTabla, ref PropiedadesMostrar);
                             }
 
                             //DELETE FROM
                             if (instructionWords[0].Equals("DELETE") || instructionWords[0].Equals(PalabrasReservadas["DELETE"]))
                             {
+                                borrarTabla = "";
                                 if (instructionWords[1].Equals("FROM") || instructionWords[1].Equals(PalabrasReservadas["FROM"]))
                                 {
                                     DeleteFrom(ref borrarDeTabla, ref instructionWords, longitud);
@@ -136,6 +144,7 @@ namespace microSQL_Chian_Garcia.Models
                             //DROP TABLE
                             if ((instructionWords[0] + " " + instructionWords[1]).Equals("DROP TABLE") || (instructionWords[0] + " " + instructionWords[1]).Equals(PalabrasReservadas["DROP TABLE"]))
                             {
+                                borrarTabla = "";
                                 borrarTabla = instructionWords[2];
                                 Drop(borrarTabla);
                             }
@@ -634,6 +643,7 @@ namespace microSQL_Chian_Garcia.Models
                     var path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
                     Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
                     Data.Instancia.TreeResgitro.Agregar(NuevoRegistro.Identificador.ToString().Trim('x'), NuevoRegistro, "");
+                    Data.Instancia.TreeResgitro.Cerrar();
                 }
                 else
                 {
@@ -669,6 +679,7 @@ namespace microSQL_Chian_Garcia.Models
 
                 if (contenidoSeleccionar[0] == "*")
                 {
+                    path = "";
                     path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
                     Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
 
@@ -680,12 +691,18 @@ namespace microSQL_Chian_Garcia.Models
                         listaDatos.Add(registro);
                     }
                     ContenidoMostrar = listaDatos;
-                    PropiedadMostrar.Add("");
+
+                    foreach (var prop in ContenidoTablas[nombreTabla].Keys)
+                    {
+                        PropiedadMostrar.Add(prop);
+                    }
+
                     TablasMostrar.Add(nombreTabla);
                     Data.Instancia.TreeResgitro.Cerrar();
                 }
                 else
                 {
+                    path = "";
                     path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
                     Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
 
@@ -714,14 +731,55 @@ namespace microSQL_Chian_Garcia.Models
                 con = contenidoSeleccionar.Count;
 
                 nombreTabla = contenidoSeleccionar[con - 1];
+                contenidoSeleccionar.RemoveAt(con - 1);
 
-                path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
-                Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
+                //CONTENIDO PUEDE HABER *
+                if (contenidoSeleccionar[0] == "*")
+                {
+                    path = "";
+                    path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
+                    Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
 
-                listaDatos.Add(Data.Instancia.TreeResgitro.Obtener(llave));
-                ContenidoMostrar = listaDatos;
-                TablasMostrar.Add(nombreTabla);
-                Data.Instancia.TreeResgitro.Cerrar();
+                    var objeto = Data.Instancia.TreeResgitro.Obtener(llave);
+
+                    var fabricarObj = new FabricaRegistro();
+                    var registro = fabricarObj.FabricarObtenido(objeto.ToString());
+
+                    listaDatos.Add(registro);
+                    ContenidoMostrar = listaDatos;
+
+                    foreach (var prop in ContenidoTablas[nombreTabla].Keys)
+                    {
+                        PropiedadMostrar.Add(prop);
+                    }
+
+                    TablasMostrar.Add(nombreTabla);
+                    Data.Instancia.TreeResgitro.Cerrar();
+                }
+                else
+                {
+                    path = "";
+                    path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
+                    Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
+
+                    var objeto = Data.Instancia.TreeResgitro.Obtener(llave);
+
+                    var fabricarObj = new FabricaRegistro();
+                    var registro = fabricarObj.FabricarObtenido(objeto.ToString());
+
+                    listaDatos.Add(registro);
+
+
+                    foreach (var prop in contenidoSeleccionar)
+                    {
+                        PropiedadesMostrar.Add(prop);
+
+                    }
+
+                    ContenidoMostrar = listaDatos;
+                    TablasMostrar.Add(nombreTabla);
+                    Data.Instancia.TreeResgitro.Cerrar();
+                }
             }
             else
             {

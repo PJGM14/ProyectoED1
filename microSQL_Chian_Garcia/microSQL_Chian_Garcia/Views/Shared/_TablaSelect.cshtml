@@ -25,66 +25,135 @@
 
         @foreach (var contenido in Data.Instancia.EditorTexto.ContenidoMostrar)
         {
-            <tr>
-
-                @foreach (var contenido2 in Data.Instancia.EditorTexto.TablasMostrar)
+        <tr>
+            @foreach (var prop in Data.Instancia.EditorTexto.PropiedadesMostrar)
+            {
+                foreach (var nomTabla in Data.Instancia.EditorTexto.TablasMostrar)
                 {
-                    foreach (var contenido3 in Data.Instancia.EditorTexto.ContenidoTablas[contenido2].Values)
+                    Data.Instancia.EditorTexto.contadorMostrar = 0;
+                    foreach (var dicTabla in Data.Instancia.EditorTexto.ContenidoTablas[nomTabla])
                     {
-
-                        if (contenido3 == "INT PRIMARY KEY")
+                        
+                        if (dicTabla.Key == prop && dicTabla.Value == "INT PRIMARY KEY")
                         {
                             <td>@contenido.Identificador</td>
                         }
-                        else if (contenido3 == "INT")
+                        else if (dicTabla.Key == prop && dicTabla.Value == "INT")
                         {
-                            if (contenido.Entero1 != 0)
+                            if (contenido.Entero1 != 0 && Data.Instancia.EditorTexto.contadorMostrar ==1)
                             {
                                 <td>@contenido.Entero1</td>
+                                Data.Instancia.EditorTexto.contadorMostrar = 0;
                             }
-                            if (contenido.Entero2 != 0)
+                            if (contenido.Entero2 != 0 && Data.Instancia.EditorTexto.contadorMostrar == 2)
                             {
                                 <td>@contenido.Entero2</td>
+                                Data.Instancia.EditorTexto.contadorMostrar = 0;
                             }
-                            if (contenido.Entero3 != 0)
+                            if (contenido.Entero3 != 0 && Data.Instancia.EditorTexto.contadorMostrar == 3)
                             {
                                 <td>@contenido.Entero3</td>
+                                Data.Instancia.EditorTexto.contadorMostrar = 0;
                             }
                         }
-                        else if (contenido3 == "VARCHAR(100)")
+                        else if (dicTabla.Key == prop && dicTabla.Value == "VARCHAR(100)")
                         {
-                            if (contenido.Cadena1 != "")
+                            if (contenido.Cadena1 != "" && Data.Instancia.EditorTexto.contadorMostrar == 1)
                             {
                                 <td>@contenido.Cadena1</td>
+                                Data.Instancia.EditorTexto.contadorMostrar = 0;
                             }
-                            if (contenido.Cadena2 != "")
+                            if (contenido.Cadena2 != "" && Data.Instancia.EditorTexto.contadorMostrar == 2)
                             {
                                 <td>@contenido.Cadena2</td>
+                                Data.Instancia.EditorTexto.contadorMostrar = 0;
                             }
-                            if (contenido.Cadena3 != "")
+                            if (contenido.Cadena3 != "" && Data.Instancia.EditorTexto.contadorMostrar == 3)
                             {
-                                <td>@contenido.Cadena3</td>
+                                <td>@contenido.Entero3</td>
+                                Data.Instancia.EditorTexto.contadorMostrar = 0;
                             }
-
                         }
-                        else if (contenido3 == "DATETIME")
+                        else if(dicTabla.Key == prop && dicTabla.Value == "DATETIME")
                         {
-                            if (contenido.Tiempo1 != "")
+                            if (contenido.Tiempo1 != "" && Data.Instancia.EditorTexto.contadorMostrar == 1)
                             {
                                 <td>@contenido.Tiempo1</td>
+                                Data.Instancia.EditorTexto.contadorMostrar = 0;
                             }
-                            if (contenido.Tiempo2 != "")
+                            if (contenido.Tiempo2 != "" && Data.Instancia.EditorTexto.contadorMostrar == 2)
                             {
                                 <td>@contenido.Tiempo2</td>
+                                Data.Instancia.EditorTexto.contadorMostrar = 0;
                             }
-                            if (contenido.Tiempo3 != "")
+                            if (contenido.Tiempo3 != "" && Data.Instancia.EditorTexto.contadorMostrar == 3)
                             {
                                 <td>@contenido.Tiempo3</td>
+                                Data.Instancia.EditorTexto.contadorMostrar = 0;
                             }
+                        }
+                        Data.Instancia.EditorTexto.contadorMostrar++;
+                    }
+                }
+            }
+            @*@foreach (var contenido2 in Data.Instancia.EditorTexto.TablasMostrar)
+            {
+                foreach (var contenido3 in Data.Instancia.EditorTexto.ContenidoTablas[contenido2].Values)
+                {
+
+                    if (contenido3 == "INT PRIMARY KEY")
+                    {
+                        <td>@contenido.Identificador</td>
+                    }
+                    else if (contenido3 == "INT")
+                    {
+                        if (contenido.Entero1 != 0)
+                        {
+                            <td>@contenido.Entero1</td>
+                        }
+                        if (contenido.Entero2 != 0)
+                        {
+                            <td>@contenido.Entero2</td>
+                        }
+                        if (contenido.Entero3 != 0)
+                        {
+                            <td>@contenido.Entero3</td>
+                        }
+                    }
+                    else if (contenido3 == "VARCHAR(100)")
+                    {
+                        if (contenido.Cadena1 != "")
+                        {
+                            <td>@contenido.Cadena1</td>
+                        }
+                        if (contenido.Cadena2 != "")
+                        {
+                            <td>@contenido.Cadena2</td>
+                        }
+                        if (contenido.Cadena3 != "")
+                        {
+                            <td>@contenido.Cadena3</td>
+                        }
+
+                    }
+                    else if (contenido3 == "DATETIME")
+                    {
+                        if (contenido.Tiempo1 != "")
+                        {
+                            <td>@contenido.Tiempo1</td>
+                        }
+                        if (contenido.Tiempo2 != "")
+                        {
+                            <td>@contenido.Tiempo2</td>
+                        }
+                        if (contenido.Tiempo3 != "")
+                        {
+                            <td>@contenido.Tiempo3</td>
                         }
                     }
                 }
-            </tr>
+            }*@
+        </tr>
         }
 
     </table>
