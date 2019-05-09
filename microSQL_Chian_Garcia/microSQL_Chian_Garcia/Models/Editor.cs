@@ -138,16 +138,216 @@ namespace microSQL_Chian_Garcia.Models
             return EjecucionCorrecta;
         }
 
+
+        public bool InsertarEn(List<string> listaDatos)
+        {
+            var nombreTabla = listaDatos[0];
+
+            if (!File.Exists(Data.Instancia.PathDirectorio + "Tablas\\" + listaDatos[0] + ".tabla"))
+            {
+                listaDatos.RemoveAt(0);
+
+                var listaNombresColumnas = new List<string>();
+                var listaTipoDato = new List<string>();
+
+                foreach (var item in ContenidoTablas)
+                {
+                    foreach (var contenido in item.Value)
+                    {
+                        listaNombresColumnas.Add(contenido.Key);
+                        listaTipoDato.Add(contenido.Value);
+                    }
+                }
+
+                int Identificador = 0;
+                int entero1 = 0;
+                int entero2 = 0;
+                int entero3 = 0;
+
+                string cadena1 = "";
+                string cadena2 = "";
+                string cadena3 = "";
+
+                string Fecha1 = "";
+                string Fecha2 = "";
+                string Fecha3 = "";
+
+                var cantidadColumnas = listaDatos.Count / 2;
+
+                if (listaDatos.Count % 2 == 0)
+                {
+                    for (int i = 0; i < cantidadColumnas; i++)
+                    {
+                        if (listaDatos[i] == listaNombresColumnas[i])
+                        {
+
+                        }
+                        else
+                        {
+                            throw new Exception("No ha ingresado las columnas en el orden que fue creada la tabla " + nombreTabla);
+                        }
+                    }
+
+                    for (int i = cantidadColumnas; i < listaDatos.Count; i++)
+                    {
+
+                        if (Int32.TryParse(listaDatos[i], out int result))
+                        {
+                            if (Identificador == 0)
+                            {
+                                Identificador = result;
+                            }
+                            else if (entero1 == 0)
+                            {
+                                entero1 = result;
+                            }
+                            else if (entero2 == 0)
+                            {
+                                entero2 = result;
+                            }
+                            else
+                            {
+                                entero3 = result;
+                            }
+                        }
+                        else if (DateTime.TryParse(listaDatos[i],out DateTime fecha))
+                        {
+                            if (Fecha1 == "")
+                            {
+                                Fecha1 = listaDatos[i];
+                            }
+                            else if (Fecha2 == "")
+                            {
+                                Fecha2 = listaDatos[i];
+                            }
+                            else
+                            {
+                                Fecha3 = listaDatos[i];
+                            }
+                        }
+                        else
+                        {
+                            if (cadena1 == "")
+                            {
+                                cadena1 = listaDatos[i];
+                            }
+                            else if( cadena2 == "")
+                            {
+                                cadena2 = listaDatos[i];
+                            }
+                            else
+                            {
+                                cadena3 = listaDatos[i];
+                            }
+                        }
+                    }
+                    EjecucionCorrecta = true;
+
+                    var NuevoRegistro = new Registro(Identificador,entero1,entero2,entero3,cadena1,cadena2,cadena3,Fecha1,Fecha2,Fecha3);
+
+                    var path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
+                    Data.Instancia.TreeResgitro = new ArbolB<Registro>(4,path,new FabricaRegistro());
+                    Data.Instancia.TreeResgitro.Agregar(NuevoRegistro.Identificador.ToString().Trim('x'), NuevoRegistro,"");
+                }
+                else
+                {
+                    throw new Exception("Ha ingresado más valores que columnas o más columnas que datos");
+                }
+            }
+            else
+            {
+                EjecucionCorrecta = false;
+            }
+
+            return EjecucionCorrecta;
+        }
+
+        public List<Registro> SeleccionarDe(List<string> contenidoSeleccionar, ref List<string> PropiedadMostrar)
+        {
+            var listaDatos = new List<Registro>();
+            var con = contenidoSeleccionar.Count;
+            var nombreTabla = "";
+            var path = "";
+
+            if (ContenidoTablas.ContainsKey(contenidoSeleccionar[con-1]))
+            {
+                nombreTabla = contenidoSeleccionar[con - 1];
+                contenidoSeleccionar.RemoveAt(con-1); //SE ELIMINA EL NOMBRE DE LA TABLA DE LA LISTA
+
+                if (contenidoSeleccionar[0] == "*")
+                {
+                    path = Data.Instancia.PathDirectorio + "\\ArbolesB\\"+ nombreTabla+".arbolB";
+                    Data.Instancia.TreeResgitro = new ArbolB<Registro>(4,path,new FabricaRegistro());
+
+                    foreach (var item in Data.Instancia.TreeResgitro.RecorrerPreOrden())
+                    {
+                        var fabricar = new FabricaRegistro();
+                        var registro = fabricar.FabricarObtenido(item);
+
+                        listaDatos.Add(registro);
+                    }
+                    PropiedadMostrar.Add("");
+                    Data.Instancia.TreeResgitro.Cerrar();
+                }
+                else
+                {
+                    path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
+                    Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
+
+                    foreach (var item in Data.Instancia.TreeResgitro.RecorrerPreOrden())
+                    {
+                        var fabricar = new FabricaRegistro();
+                        var registro = fabricar.FabricarObtenido(item);
+
+                        listaDatos.Add(registro);
+                    }
+
+                    foreach (var paraMostrar in contenidoSeleccionar)
+                    {
+                        PropiedadMostrar.Add(paraMostrar);
+                    }
+
+                    Data.Instancia.TreeResgitro.Cerrar();
+                }
+            }
+            else if(Int32.TryParse(contenidoSeleccionar[con-1],out int result) && ContenidoTablas.ContainsKey(contenidoSeleccionar[con-2]))
+            {
+                var llave = result.ToString();
+
+                contenidoSeleccionar.RemoveAt(con - 1);
+                con = contenidoSeleccionar.Count;
+
+                nombreTabla = contenidoSeleccionar[con - 1];
+
+                path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
+                Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
+
+                listaDatos.Add(Data.Instancia.TreeResgitro.Obtener(llave));
+                Data.Instancia.TreeResgitro.Cerrar();
+            }
+            else
+            {
+                Data.Instancia.TreeResgitro.Cerrar();
+                //TABLA NO EXISTE
+            }
+
+            return listaDatos;
+        }
+
+
+        //DE EJEMPLOOOOO---------------------------------------------------------------------
         public void MandarDato()
         {
+            //OBJ
             var prueba = new Registro(12, 40, 0, 0, "", "Hola", "Que", "15/02/2019", "", "");
 
             var path = Data.Instancia.PathDirectorio + "\\ArbolesB\\MOUSE.arbolB";
+
             Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
             Data.Instancia.TreeResgitro.Agregar(prueba.Identificador.ToString().Trim('x'), prueba, "");
-            
+
             var prueba2 = new Registro(13, 43434, 34344, 3434, "Com", "pu", "tadora", "25/02/2909", "", "");
-            Data.Instancia.TreeResgitro.Agregar(prueba2.Identificador.ToString().Trim('x'),prueba2,"");
+            Data.Instancia.TreeResgitro.Agregar(prueba2.Identificador.ToString().Trim('x'), prueba2, "");
             Data.Instancia.TreeResgitro.Cerrar();
         }
 

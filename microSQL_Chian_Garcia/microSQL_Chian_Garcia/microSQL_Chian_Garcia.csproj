@@ -121,7 +121,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\EditorController.cs" />
-    <Compile Include="Controllers\EjemploAlumnoController.cs" />
     <Compile Include="Controllers\PalabrasReservadasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -171,7 +170,6 @@
     <Content Include="Views\PalabrasReservadas\TablaPalabras.cshtml" />
     <Content Include="Views\PalabrasReservadas\Edit.cshtml" />
     <Content Include="Views\Shared\_TreeView.cshtml" />
-    <Content Include="Views\EjemploAlumno\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

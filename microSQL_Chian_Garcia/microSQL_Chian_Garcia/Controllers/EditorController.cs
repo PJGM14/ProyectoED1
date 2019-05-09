@@ -42,23 +42,44 @@ namespace microSQL_Chian_Garcia.Controllers
 
                 //EL MÉTODO DEBERÍA DE ESTAR EN ALGÚN MODELO QUE HAGA LAS VERIFICACIONES, O BIEN EN EL MODELO EDITOR QUE NO POSEE NINGÚN MÉTODO
 
+                //diccionario de prueba para CREAR TABLA
                 var dicPruebaTablas = new Dictionary<string,string>();
-
                 dicPruebaTablas.Add("MOUSE","NOMBRE");
                 dicPruebaTablas.Add("ID", "INT PRIMARY KEY");
                 dicPruebaTablas.Add("MARCA", "VARCHAR[100]");
                 dicPruebaTablas.Add("COLOR", "VARCHAR[100]");
-
                 Data.Instancia.EditorTexto.CrearTabla(dicPruebaTablas);
 
+                //PRUEBA DE METER DATOS EN UNA TABLA
                 Data.Instancia.EditorTexto.MandarDato();
-
-                var obj = Data.Instancia.EditorTexto.ObtenerDato();
-
-                var fabricar = new FabricaRegistro();
-
-                var registro = fabricar.FabricarObtenido(obj.ToString());
                 
+                //PRUEBA PARA OBTENER UN OBJETO DE LA TABLA CON CIERTO ID
+                var obj = Data.Instancia.EditorTexto.ObtenerDato();
+                Data.Instancia.TreeResgitro.Cerrar(); //DESPUES DE OBTENER SIEMPRE MANDAR A CERRAR EL ARCHVIO
+                var fabricar = new FabricaRegistro();
+                var registro = fabricar.FabricarObtenido(obj.ToString());
+
+                //LISTA PARA PROBAR LA INSERCION DE UN OBJETO YA DE ESTE PROYECTO
+                var listaInsert = new List<string>();
+                listaInsert.Add("MOUSE");
+                listaInsert.Add("ID");
+                listaInsert.Add("MARCA");
+                listaInsert.Add("COLOR");
+                listaInsert.Add("3333");
+                listaInsert.Add("FERRARI");
+                listaInsert.Add("ROJO");
+                Data.Instancia.EditorTexto.InsertarEn(listaInsert);
+                Data.Instancia.TreeResgitro.Cerrar();
+
+                //SE PRUEBA EL SELECT CON UN OBJETO DE ESTE RPROYECTO
+                var listaSelect = new List<string>();
+
+                var listaPropiedades = new List<string>();
+                listaSelect.Add("ID");
+                listaSelect.Add("MARCA");
+                listaSelect.Add("MOUSE");
+
+                var RegistrosSelect = Data.Instancia.EditorTexto.SeleccionarDe(listaSelect, ref listaPropiedades);
 
                 return RedirectToAction("Index"); //Cambiar esto
             }
