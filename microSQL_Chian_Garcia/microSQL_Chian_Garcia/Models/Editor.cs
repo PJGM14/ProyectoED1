@@ -90,15 +90,20 @@ namespace microSQL_Chian_Garcia.Models
 
                             //***********************************SE VALIDA A QUE INSTRUCCION PERTENECE************************************
                             //CREATE TABLE
-                            if ((instructionWords[0] + instructionWords[1]).Equals("CREATETABLE") || (instructionWords[0] + instructionWords[1]).Equals(PalabrasReservadas["CREATETABLE"]))
+                            if ((instructionWords[0] + " " + instructionWords[1]).Equals("CREATE TABLE") || (instructionWords[0] + " " + instructionWords[1]).Equals(PalabrasReservadas["CREATE TABLE"]))
                             {
                                 CreateTable(ref crearTablaValores, ref instructionWords, longitud);
+                                
+                                EjecucionCorrecta = CrearTabla(crearTablaValores);
+                                
                             }
 
                             //INSERT INTO
-                            if((instructionWords[0] + instructionWords[1]).Equals("INSERTINTO") || (instructionWords[0] + instructionWords[1]).Equals(PalabrasReservadas["INSERTINTO"]))
+                            if((instructionWords[0] + " " + instructionWords[1]).Equals("INSERT INTO") || (instructionWords[0] + " " + instructionWords[1]).Equals(PalabrasReservadas["INSERT INTO"]))
                             {
                                 InsertInto(ref insertarEnTablaValores, ref instructionWords, longitud);
+
+                                EjecucionCorrecta = InsertarEn(insertarEnTablaValores);
                             }
 
                             //SELECT FROM
@@ -118,7 +123,7 @@ namespace microSQL_Chian_Garcia.Models
                             }
 
                             //DROP TABLE
-                            if((instructionWords[0] + instructionWords[1]).Equals("DROPTABLE") || (instructionWords[0] + instructionWords[1]).Equals(PalabrasReservadas["DROPTABLE"]))
+                            if((instructionWords[0] + " " + instructionWords[1]).Equals("DROP TABLE") || (instructionWords[0] + " " + instructionWords[1]).Equals(PalabrasReservadas["DROP TABLE"]))
                             {
                                 borrarTabla = instructionWords[2];
                             }
@@ -137,9 +142,9 @@ namespace microSQL_Chian_Garcia.Models
 
                 }
             }
-            catch
+            catch(Exception e )
             {
-
+                var error = e.Message;
             }
 
         

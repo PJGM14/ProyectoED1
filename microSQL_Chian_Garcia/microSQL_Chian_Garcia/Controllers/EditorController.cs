@@ -36,7 +36,10 @@ namespace microSQL_Chian_Garcia.Controllers
         {
             try
             {
+                Data.Instancia.EditorTexto.TextoPantalla = "";
                 Data.Instancia.EditorTexto.TextoPantalla = collection["TextoPantalla"];
+
+                Data.Instancia.EditorTexto.Read(Data.Instancia.EditorTexto.TextoPantalla);
 
                 //AQUI MANDAR A LLAMAR ALGUN MÉTODO QUE DEVUELVA ALGÚN BOOL PARA VER A QUE VISTA SE MANDA
 
