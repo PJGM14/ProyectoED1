@@ -67,7 +67,7 @@ namespace microSQL_Chian_Garcia.Models
             List<string> seleccionarDeTabla = new List<string>();
             List<string> borrarDeTabla = new List<string>();
             string borrarTabla;
-            
+
             code = code.ToUpper();
             code = code.Trim();
 
@@ -86,15 +86,15 @@ namespace microSQL_Chian_Garcia.Models
                 if (code.Contains("GO") || code.Contains(PalabrasReservadas["GO"]))
                 {
                     //SEPARA EL CODIGO POR INSTRUCCIONES
-                    var codeInstructions = code.Split(new string[] {"GO"}, StringSplitOptions.None);
+                    var codeInstructions = code.Split(new string[] { "GO" }, StringSplitOptions.None);
 
                     if (codeInstructions[codeInstructions.Length - 1].Trim().Equals(""))
                     {
-                        for(int i = 0; i < codeInstructions.Length - 1; i++)
+                        for (int i = 0; i < codeInstructions.Length - 1; i++)
                         {
                             //SEPARA CADA INSRUCCION EN PALABRAS
                             codeInstructions[i] = codeInstructions[i].Trim();
-                            var instructionWords = codeInstructions[i].Split(new string[] {" "}, StringSplitOptions.RemoveEmptyEntries);
+                            var instructionWords = codeInstructions[i].Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                             int longitud = instructionWords.Length;
 
                             //***********************************SE VALIDA A QUE INSTRUCCION PERTENECE************************************
@@ -102,13 +102,13 @@ namespace microSQL_Chian_Garcia.Models
                             if ((instructionWords[0] + " " + instructionWords[1]).Equals("CREATE TABLE") || (instructionWords[0] + " " + instructionWords[1]).Equals(PalabrasReservadas["CREATE TABLE"]))
                             {
                                 CreateTable(ref crearTablaValores, ref instructionWords, longitud);
-                                
+
                                 EjecucionCorrecta = CrearTabla(crearTablaValores);
-                                
+
                             }
 
                             //INSERT INTO
-                            if((instructionWords[0] + " " + instructionWords[1]).Equals("INSERT INTO") || (instructionWords[0] + " " + instructionWords[1]).Equals(PalabrasReservadas["INSERT INTO"]))
+                            if ((instructionWords[0] + " " + instructionWords[1]).Equals("INSERT INTO") || (instructionWords[0] + " " + instructionWords[1]).Equals(PalabrasReservadas["INSERT INTO"]))
                             {
                                 InsertInto(ref insertarEnTablaValores, ref instructionWords, longitud);
 
@@ -116,25 +116,25 @@ namespace microSQL_Chian_Garcia.Models
                             }
 
                             //SELECT FROM
-                            if(instructionWords[0].Equals("SELECT") || instructionWords[0].Equals(PalabrasReservadas["SELECT"]))
+                            if (instructionWords[0].Equals("SELECT") || instructionWords[0].Equals(PalabrasReservadas["SELECT"]))
                             {
                                 SelectFrom(ref seleccionarDeTabla, ref instructionWords, longitud);
                                 SeleccionarDe(seleccionarDeTabla, ref PropiedadesMostrar);
                             }
 
                             //DELETE FROM
-                            if(instructionWords[0].Equals("DELETE") || instructionWords[0].Equals(PalabrasReservadas["DELETE"]))
+                            if (instructionWords[0].Equals("DELETE") || instructionWords[0].Equals(PalabrasReservadas["DELETE"]))
                             {
-                                if(instructionWords[1].Equals("FROM") || instructionWords[1].Equals(PalabrasReservadas["FROM"]))
+                                if (instructionWords[1].Equals("FROM") || instructionWords[1].Equals(PalabrasReservadas["FROM"]))
                                 {
                                     DeleteFrom(ref borrarDeTabla, ref instructionWords, longitud);
                                     EliminarDe(borrarDeTabla);
                                 }
-                                
+
                             }
 
                             //DROP TABLE
-                            if((instructionWords[0] + " " + instructionWords[1]).Equals("DROP TABLE") || (instructionWords[0] + " " + instructionWords[1]).Equals(PalabrasReservadas["DROP TABLE"]))
+                            if ((instructionWords[0] + " " + instructionWords[1]).Equals("DROP TABLE") || (instructionWords[0] + " " + instructionWords[1]).Equals(PalabrasReservadas["DROP TABLE"]))
                             {
                                 borrarTabla = instructionWords[2];
                                 Drop(borrarTabla);
@@ -145,7 +145,7 @@ namespace microSQL_Chian_Garcia.Models
                     {
                         //LE FALTA EL ULTIMO GO
                     }
-                             
+
 
                 }
                 else
@@ -154,20 +154,20 @@ namespace microSQL_Chian_Garcia.Models
 
                 }
             }
-            catch(Exception e )
+            catch (Exception e)
             {
                 var error = e.Message;
             }
 
-        
+
 
         }
 
         //******************METODO PARA ANALIZAR LAS INSTRUCCIONES PARA CREAR TABLAS*******************************************
-        public void CreateTable(ref Dictionary<string,string> crearTablaValores, ref string[] instructionWords, int longitud)
+        public void CreateTable(ref Dictionary<string, string> crearTablaValores, ref string[] instructionWords, int longitud)
         {
             if (instructionWords[longitud - 1].Equals(")"))
-            {                            
+            {
                 int cantVar = 0;
                 int cantInt = 0;
                 int cantDate = 0;
@@ -178,26 +178,26 @@ namespace microSQL_Chian_Garcia.Models
                 {
                     if (instructionWords[4].Equals("ID"))
                     {
-                        if((instructionWords[5] + instructionWords[6] + instructionWords[7]).Equals("INTPRIMARYKEY,"))
+                        if ((instructionWords[5] + instructionWords[6] + instructionWords[7]).Equals("INTPRIMARYKEY,"))
                         {
                             crearTablaValores.Add("ID", "INT PRIMARY KEY");
 
                             var posicion = 8;
-                            while(instructionWords[posicion] != ")")
+                            while (instructionWords[posicion] != ")")
                             {
-                                if(posicion == (longitud - 3))
+                                if (posicion == (longitud - 3))
                                 {
                                     if (instructionWords[posicion + 1].Equals("INT"))
                                     {
-                                        if(cantInt <= 3)
+                                        if (cantInt <= 3)
                                         {
                                             crearTablaValores.Add(instructionWords[posicion], "INT");
                                             cantInt++;
-                                        }                                                    
+                                        }
                                     }
                                     if (instructionWords[posicion + 1].Equals("VARCHAR(100)"))
                                     {
-                                        if(cantVar <= 3)
+                                        if (cantVar <= 3)
                                         {
                                             crearTablaValores.Add(instructionWords[posicion], "VARCHAR(100)");
                                             cantVar++;
@@ -205,27 +205,27 @@ namespace microSQL_Chian_Garcia.Models
                                     }
                                     if (instructionWords[posicion + 1].Equals("DATETIME"))
                                     {
-                                        if(cantDate <= 3)
+                                        if (cantDate <= 3)
                                         {
                                             crearTablaValores.Add(instructionWords[posicion], "DATETIME");
                                             cantDate++;
-                                        }                                                    
+                                        }
                                     }
-                                    posicion = longitud-1;
+                                    posicion = longitud - 1;
                                 }
                                 else
                                 {
                                     if (instructionWords[posicion + 1].Equals("INT,"))
                                     {
-                                        if(cantInt <= 3)
+                                        if (cantInt <= 3)
                                         {
                                             crearTablaValores.Add(instructionWords[posicion], "INT");
                                             cantInt++;
-                                        } 
+                                        }
                                     }
                                     if (instructionWords[posicion + 1].Equals("VARCHAR(100),"))
                                     {
-                                        if(cantVar <= 3)
+                                        if (cantVar <= 3)
                                         {
                                             crearTablaValores.Add(instructionWords[posicion], "VARCHAR(100)");
                                             cantVar++;
@@ -233,15 +233,15 @@ namespace microSQL_Chian_Garcia.Models
                                     }
                                     if (instructionWords[posicion + 1].Equals("DATETIME,"))
                                     {
-                                        if(cantDate <= 3)
+                                        if (cantDate <= 3)
                                         {
                                             crearTablaValores.Add(instructionWords[posicion], "DATETIME");
                                             cantDate++;
-                                        } 
+                                        }
                                     }
                                     posicion += 2;
                                 }
-                            }                                    
+                            }
                         }
                     }
                     else
@@ -275,7 +275,7 @@ namespace microSQL_Chian_Garcia.Models
 
                         int posicion = 5;
 
-                        while(instructionWords[posicion] != ")")
+                        while (instructionWords[posicion] != ")")
                         {
                             string[] sinComa = instructionWords[posicion].Split(',');
                             insertarEnTablaValores.Add(sinComa[0]);
@@ -292,7 +292,7 @@ namespace microSQL_Chian_Garcia.Models
                             {
                                 posicion++;
 
-                                while(instructionWords[posicion] != ")")
+                                while (instructionWords[posicion] != ")")
                                 {
                                     string[] sinComa = instructionWords[posicion].Split(',');
 
@@ -300,7 +300,7 @@ namespace microSQL_Chian_Garcia.Models
                                     {
                                         string[] sinComillas = sinComa[0].Split('\'');
 
-                                        if(sinComillas.Length == 3)
+                                        if (sinComillas.Length == 3)
                                         {
                                             insertarEnTablaValores.Add(sinComillas[1]);
                                         }
@@ -350,15 +350,16 @@ namespace microSQL_Chian_Garcia.Models
             bool contieneFrom = false;
             bool contieneWhere = false;
 
-            for(int i = 0; i < longitud; i++)
+            for (int i = 0; i < longitud; i++)
             {
-                if(instructionWords[i].Contains("FROM") || instructionWords[i].Contains(PalabrasReservadas["FROM"])){
+                if (instructionWords[i].Contains("FROM") || instructionWords[i].Contains(PalabrasReservadas["FROM"]))
+                {
                     contieneFrom = true;
                 }
             }
             if (contieneFrom)
             {
-                while(instructionWords[posicion] != "FROM" || instructionWords[posicion] != PalabrasReservadas["FROM"])
+                while (instructionWords[posicion] != "FROM" || instructionWords[posicion] != PalabrasReservadas["FROM"])
                 {
                     if (instructionWords[posicion].Contains(","))
                     {
@@ -370,22 +371,22 @@ namespace microSQL_Chian_Garcia.Models
                     {
                         seleccionarDeTabla.Add(instructionWords[posicion]);
                         posicion++;
-                    }                
+                    }
                 }
                 seleccionarDeTabla.Add(instructionWords[++posicion]);
 
-                if(posicion < longitud)
+                if (posicion < longitud)
                 {
-                    for(int i = ++posicion; i < longitud; i++)
+                    for (int i = ++posicion; i < longitud; i++)
                     {
-                        if(instructionWords[i].Contains("WHERE") || instructionWords[i].Contains(PalabrasReservadas["WHERE"]))
+                        if (instructionWords[i].Contains("WHERE") || instructionWords[i].Contains(PalabrasReservadas["WHERE"]))
                         {
                             contieneWhere = true;
                         }
                     }
                     if (contieneWhere)
                     {
-                        seleccionarDeTabla.Add(instructionWords[longitud-1]);
+                        seleccionarDeTabla.Add(instructionWords[longitud - 1]);
                     }
                 }
             }
@@ -393,7 +394,7 @@ namespace microSQL_Chian_Garcia.Models
             {
                 //NO CONTIENE LA PALABRA FROM, POR LO TANTO NO ESTA BIEN ESCRITO
             }
-            
+
         }
 
         //*****************METODO PARA ANALIZAR LAS INSTRUCCIONES PARA BORRAR INFORMACION**************************************
@@ -402,16 +403,16 @@ namespace microSQL_Chian_Garcia.Models
             bool contieneWhere = false;
             borrarDeTabla.Add(instructionWords[2]);
 
-            for(int i = 0; i < instructionWords.Length; i++)
+            for (int i = 0; i < instructionWords.Length; i++)
             {
-                if(instructionWords[i].Equals("WHERE") || instructionWords[i].Equals(PalabrasReservadas["WHERE"]))
+                if (instructionWords[i].Equals("WHERE") || instructionWords[i].Equals(PalabrasReservadas["WHERE"]))
                 {
                     contieneWhere = true;
                 }
             }
             if (contieneWhere)
             {
-                borrarDeTabla.Add(instructionWords[longitud-1]);
+                borrarDeTabla.Add(instructionWords[longitud - 1]);
             }
         }
 
@@ -421,6 +422,11 @@ namespace microSQL_Chian_Garcia.Models
         //Método que obtiene la información de cada tabla que está en la carpeta de ~MicroSQL/Tablas
         public void ObtenerTablas()
         {
+            TablasMostrar.Clear();
+
+            ContenidoMostrar.Clear();
+
+            PropiedadesMostrar.Clear();
             //Limpia el diccionario que contiene la info de las tablas
             ContenidoTablas.Clear();
 
@@ -464,6 +470,11 @@ namespace microSQL_Chian_Garcia.Models
 
         public bool CrearTabla(Dictionary<string, string> contenidoCrearTabla)
         {
+            TablasMostrar.Clear();
+
+            ContenidoMostrar.Clear();
+
+            PropiedadesMostrar.Clear();
             var nombre = "";
             var detener = false;
 
@@ -511,6 +522,11 @@ namespace microSQL_Chian_Garcia.Models
 
         public bool InsertarEn(List<string> listaDatos)
         {
+            TablasMostrar.Clear();
+
+            ContenidoMostrar.Clear();
+
+            PropiedadesMostrar.Clear();
             var nombreTabla = listaDatos[0];
 
             if (!File.Exists(Data.Instancia.PathDirectorio + "Tablas\\" + listaDatos[0] + ".tabla"))
@@ -580,7 +596,7 @@ namespace microSQL_Chian_Garcia.Models
                                 entero3 = result;
                             }
                         }
-                        else if (DateTime.TryParse(listaDatos[i],out DateTime fecha))
+                        else if (DateTime.TryParse(listaDatos[i], out DateTime fecha))
                         {
                             if (Fecha1 == "")
                             {
@@ -601,7 +617,7 @@ namespace microSQL_Chian_Garcia.Models
                             {
                                 cadena1 = listaDatos[i];
                             }
-                            else if( cadena2 == "")
+                            else if (cadena2 == "")
                             {
                                 cadena2 = listaDatos[i];
                             }
@@ -613,11 +629,11 @@ namespace microSQL_Chian_Garcia.Models
                     }
                     EjecucionCorrecta = true;
 
-                    var NuevoRegistro = new Registro(Identificador,entero1,entero2,entero3,cadena1,cadena2,cadena3,Fecha1,Fecha2,Fecha3);
+                    var NuevoRegistro = new Registro(Identificador, entero1, entero2, entero3, cadena1, cadena2, cadena3, Fecha1, Fecha2, Fecha3);
 
                     var path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
-                    Data.Instancia.TreeResgitro = new ArbolB<Registro>(4,path,new FabricaRegistro());
-                    Data.Instancia.TreeResgitro.Agregar(NuevoRegistro.Identificador.ToString().Trim('x'), NuevoRegistro,"");
+                    Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
+                    Data.Instancia.TreeResgitro.Agregar(NuevoRegistro.Identificador.ToString().Trim('x'), NuevoRegistro, "");
                 }
                 else
                 {
@@ -634,20 +650,27 @@ namespace microSQL_Chian_Garcia.Models
 
         public bool SeleccionarDe(List<string> contenidoSeleccionar, ref List<string> PropiedadMostrar)
         {
+            TablasMostrar.Clear();
+
+            ContenidoMostrar.Clear();
+
+            PropiedadesMostrar.Clear();
+
+
             var listaDatos = new List<Registro>();
             var con = contenidoSeleccionar.Count;
             var nombreTabla = "";
             var path = "";
 
-            if (ContenidoTablas.ContainsKey(contenidoSeleccionar[con-1]))
+            if (ContenidoTablas.ContainsKey(contenidoSeleccionar[con - 1]))
             {
                 nombreTabla = contenidoSeleccionar[con - 1];
-                contenidoSeleccionar.RemoveAt(con-1); //SE ELIMINA EL NOMBRE DE LA TABLA DE LA LISTA
+                contenidoSeleccionar.RemoveAt(con - 1); //SE ELIMINA EL NOMBRE DE LA TABLA DE LA LISTA
 
                 if (contenidoSeleccionar[0] == "*")
                 {
-                    path = Data.Instancia.PathDirectorio + "\\ArbolesB\\"+ nombreTabla+".arbolB";
-                    Data.Instancia.TreeResgitro = new ArbolB<Registro>(4,path,new FabricaRegistro());
+                    path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
+                    Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
 
                     foreach (var item in Data.Instancia.TreeResgitro.RecorrerPreOrden())
                     {
@@ -683,7 +706,7 @@ namespace microSQL_Chian_Garcia.Models
                     Data.Instancia.TreeResgitro.Cerrar();
                 }
             }
-            else if(Int32.TryParse(contenidoSeleccionar[con-1],out int result) && ContenidoTablas.ContainsKey(contenidoSeleccionar[con-2]))
+            else if (Int32.TryParse(contenidoSeleccionar[con - 1], out int result) && ContenidoTablas.ContainsKey(contenidoSeleccionar[con - 2]))
             {
                 var llave = result.ToString();
 
@@ -711,6 +734,11 @@ namespace microSQL_Chian_Garcia.Models
 
         public bool EliminarDe(List<string> contenidoEliminar)
         {
+            TablasMostrar.Clear();
+
+            ContenidoMostrar.Clear();
+
+            PropiedadesMostrar.Clear();
             var cont = contenidoEliminar.Count;
             var nombreTabla = contenidoEliminar[0];
 
@@ -732,7 +760,7 @@ namespace microSQL_Chian_Garcia.Models
                     {
                         var registro = new List<Registro>();
 
-                        Data.Instancia.TreeResgitro = new ArbolB<Registro>(4,path,new FabricaRegistro());
+                        Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
 
                         foreach (var r in Data.Instancia.TreeResgitro.RecorrerPreOrden())
                         {
@@ -743,18 +771,18 @@ namespace microSQL_Chian_Garcia.Models
                         }
                         Data.Instancia.TreeResgitro.Cerrar();
 
-                        Data.Instancia.TreeResgitro = new ArbolB<Registro>(4,path+"E",new FabricaRegistro());
+                        Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path + "E", new FabricaRegistro());
 
                         foreach (var item in registro)
                         {
                             if (item.Identificador == idResult)
                             {
                                 //VER AQUI QUE PUTAS
-                               EjecucionCorrecta = false;
+                                EjecucionCorrecta = false;
                             }
                             else
                             {
-                                Data.Instancia.TreeResgitro.Agregar(item.Identificador.ToString().Trim('x'),item,"");
+                                Data.Instancia.TreeResgitro.Agregar(item.Identificador.ToString().Trim('x'), item, "");
                             }
                         }
 
@@ -762,11 +790,11 @@ namespace microSQL_Chian_Garcia.Models
                         {
                             //FUE ENCONTRADO
                             File.Delete(path);
-                            File.Move(path+"E",path);
+                            File.Move(path + "E", path);
                         }
                         else
                         {
-                            File.Delete(path +"E");
+                            File.Delete(path + "E");
                         }
                     }
                 }
@@ -778,6 +806,11 @@ namespace microSQL_Chian_Garcia.Models
 
         public bool Drop(string nombreTabla)
         {
+            TablasMostrar.Clear();
+
+            ContenidoMostrar.Clear();
+
+            PropiedadesMostrar.Clear();
             var path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
 
             if (File.Exists(path))
@@ -786,7 +819,7 @@ namespace microSQL_Chian_Garcia.Models
                 File.Delete(path);
 
                 var pathTabla = Data.Instancia.PathDirectorio + "\\Tablas\\" + nombreTabla + ".tabla";
-                                
+
                 File.Delete(pathTabla);
                 ObtenerTablas();
             }
