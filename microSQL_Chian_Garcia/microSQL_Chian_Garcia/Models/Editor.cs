@@ -30,6 +30,10 @@ namespace microSQL_Chian_Garcia.Models
 
         public bool EjecucionCorrecta { get; set; }
 
+        public List<Registro> ContenidoMostrar;
+
+        public List<string> PropiedadesMostrar;
+
         //CONSTRUCTOR
         public Editor()
         {
@@ -47,6 +51,9 @@ namespace microSQL_Chian_Garcia.Models
             ContenidoTablas = new Dictionary<string, Dictionary<string, string>>();
 
             EjecucionCorrecta = false;
+
+            ContenidoMostrar = new List<Registro>();
+            PropiedadesMostrar = new List<string>();
         }
 
         //*********************************************************************************************************************************************
@@ -110,6 +117,7 @@ namespace microSQL_Chian_Garcia.Models
                             if(instructionWords[0].Equals("SELECT") || instructionWords[0].Equals(PalabrasReservadas["SELECT"]))
                             {
                                 SelectFrom(ref seleccionarDeTabla, ref instructionWords, longitud);
+                                SeleccionarDe(seleccionarDeTabla, ref PropiedadesMostrar);
                             }
 
                             //DELETE FROM
@@ -118,6 +126,7 @@ namespace microSQL_Chian_Garcia.Models
                                 if(instructionWords[1].Equals("FROM") || instructionWords[1].Equals(PalabrasReservadas["FROM"]))
                                 {
                                     DeleteFrom(ref borrarDeTabla, ref instructionWords, longitud);
+                                    EliminarDe(borrarDeTabla);
                                 }
                                 
                             }
@@ -126,6 +135,7 @@ namespace microSQL_Chian_Garcia.Models
                             if((instructionWords[0] + " " + instructionWords[1]).Equals("DROP TABLE") || (instructionWords[0] + " " + instructionWords[1]).Equals(PalabrasReservadas["DROP TABLE"]))
                             {
                                 borrarTabla = instructionWords[2];
+                                Drop(borrarTabla);
                             }
                         }
                     }
@@ -403,12 +413,6 @@ namespace microSQL_Chian_Garcia.Models
             }
         }
 
-        //
-        public void DropTable()
-        {
-
-        }
-        
         /// <summary>
         /// .******************************************************************************************************************************************
         /// </summary>
@@ -626,7 +630,7 @@ namespace microSQL_Chian_Garcia.Models
             return EjecucionCorrecta;
         }
 
-        public List<Registro> SeleccionarDe(List<string> contenidoSeleccionar, ref List<string> PropiedadMostrar)
+        public bool SeleccionarDe(List<string> contenidoSeleccionar, ref List<string> PropiedadMostrar)
         {
             var listaDatos = new List<Registro>();
             var con = contenidoSeleccionar.Count;
@@ -650,6 +654,7 @@ namespace microSQL_Chian_Garcia.Models
 
                         listaDatos.Add(registro);
                     }
+                    ContenidoMostrar = listaDatos;
                     PropiedadMostrar.Add("");
                     Data.Instancia.TreeResgitro.Cerrar();
                 }
@@ -670,7 +675,7 @@ namespace microSQL_Chian_Garcia.Models
                     {
                         PropiedadMostrar.Add(paraMostrar);
                     }
-
+                    ContenidoMostrar = listaDatos;
                     Data.Instancia.TreeResgitro.Cerrar();
                 }
             }
@@ -687,6 +692,7 @@ namespace microSQL_Chian_Garcia.Models
                 Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
 
                 listaDatos.Add(Data.Instancia.TreeResgitro.Obtener(llave));
+                ContenidoMostrar = listaDatos;
                 Data.Instancia.TreeResgitro.Cerrar();
             }
             else
@@ -695,7 +701,94 @@ namespace microSQL_Chian_Garcia.Models
                 //TABLA NO EXISTE
             }
 
-            return listaDatos;
+            return EjecucionCorrecta;
+        }
+
+        public bool EliminarDe(List<string> contenidoEliminar)
+        {
+            var cont = contenidoEliminar.Count;
+            var nombreTabla = contenidoEliminar[0];
+
+            var path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
+
+            if (File.Exists(path))
+            {
+                //DELETE COMPLETO
+                if (cont == 1)
+                {
+                    File.Delete(path);
+                    Data.Instancia.TreeResgitro = new ArbolB<Registro>(4, path, new FabricaRegistro());
+                    Data.Instancia.TreeResgitro.Cerrar();
+                }
+
+                if (cont == 2) //DELETE CON ID
+                {
+                    if (Int32.TryParse(contenidoEliminar[cont - 1], out int idResult))
+                    {
+                        var registro = new List<Registro>();
+
+                        Data.Instancia.TreeResgitro = new ArbolB<Registro>(4,path,new FabricaRegistro());
+
+                        foreach (var r in Data.Instancia.TreeResgitro.RecorrerPreOrden())
+                        {
+                            var fabricaNueva = new FabricaRegistro();
+                            var AuxRegistro = fabricaNueva.FabricarObtenido(r);
+
+                            registro.Add(AuxRegistro);
+                        }
+                        Data.Instancia.TreeResgitro.Cerrar();
+
+                        Data.Instancia.TreeResgitro = new ArbolB<Registro>(4,path+"E",new FabricaRegistro());
+
+                        foreach (var item in registro)
+                        {
+                            if (item.Identificador == idResult)
+                            {
+                                //VER AQUI QUE PUTAS
+                               EjecucionCorrecta = false;
+                            }
+                            else
+                            {
+                                Data.Instancia.TreeResgitro.Agregar(item.Identificador.ToString().Trim('x'),item,"");
+                            }
+                        }
+
+                        if (EjecucionCorrecta)
+                        {
+                            //FUE ENCONTRADO
+                            File.Delete(path);
+                            File.Move(path+"E",path);
+                        }
+                        else
+                        {
+                            File.Delete(path +"E");
+                        }
+                    }
+                }
+            }
+
+            return EjecucionCorrecta;
+        }
+
+
+        public bool Drop(string nombreTabla)
+        {
+            var path = Data.Instancia.PathDirectorio + "\\ArbolesB\\" + nombreTabla + ".arbolB";
+
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+
+                var pathTabla = Data.Instancia.PathDirectorio + "\\Tablas\\" + nombreTabla + ".tabla";
+
+                File.Delete(pathTabla);
+            }
+            else
+            {
+                EjecucionCorrecta = false;
+            }
+
+            return EjecucionCorrecta;
         }
 
 
