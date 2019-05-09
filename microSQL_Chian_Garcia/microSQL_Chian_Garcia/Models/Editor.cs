@@ -782,11 +782,13 @@ namespace microSQL_Chian_Garcia.Models
 
             if (File.Exists(path))
             {
+                Data.Instancia.TreeResgitro.Cerrar();
                 File.Delete(path);
 
                 var pathTabla = Data.Instancia.PathDirectorio + "\\Tablas\\" + nombreTabla + ".tabla";
-
+                                
                 File.Delete(pathTabla);
+                ObtenerTablas();
             }
             else
             {
