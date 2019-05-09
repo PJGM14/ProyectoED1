@@ -55,6 +55,11 @@ namespace microSQL_Chian_Garcia.Controllers
 
                 var obj = Data.Instancia.EditorTexto.ObtenerDato();
 
+                var fabricar = new FabricaRegistro();
+
+                var registro = fabricar.FabricarObtenido(obj.ToString());
+                
+
                 return RedirectToAction("Index"); //Cambiar esto
             }
             catch(Exception e)
