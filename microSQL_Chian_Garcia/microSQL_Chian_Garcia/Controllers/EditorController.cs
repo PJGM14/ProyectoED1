@@ -57,8 +57,9 @@ namespace microSQL_Chian_Garcia.Controllers
 
                 return RedirectToAction("Index"); //Cambiar esto
             }
-            catch
+            catch(Exception e)
             {
+                var nom = e.Message;
                 return RedirectToAction("Index"); //Cambiar esto
             }
         }
