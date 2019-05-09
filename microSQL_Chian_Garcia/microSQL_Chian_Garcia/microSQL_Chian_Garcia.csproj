@@ -170,6 +170,7 @@
     <Content Include="Views\PalabrasReservadas\TablaPalabras.cshtml" />
     <Content Include="Views\PalabrasReservadas\Edit.cshtml" />
     <Content Include="Views\Shared\_TreeView.cshtml" />
+    <Content Include="Views\Shared\_TablaSelect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,92 @@
+﻿@using microSQL_Chian_Garcia.Instancia
+
+
+@if (Data.Instancia.EditorTexto.TablasMostrar.Count != 0)
+{
+    <table class="table table-hover">
+        <tr class="success">
+
+            @foreach (var item in Data.Instancia.EditorTexto.PropiedadesMostrar)
+            {
+
+                foreach (var item2 in Data.Instancia.EditorTexto.TablasMostrar)
+                {
+
+                    foreach (var nombrePropiedad in Data.Instancia.EditorTexto.ContenidoTablas[item2].Keys)
+                    {
+                        if (nombrePropiedad == item)
+                        {
+                            <th scope="col">nombrePropiedad</th>
+                        }
+                    }
+                }
+            }
+            }
+        </tr>
+
+        @foreach (var contenido in Data.Instancia.EditorTexto.ContenidoMostrar)
+        {
+            <tr>
+
+                @foreach (var contenido2 in Data.Instancia.EditorTexto.TablasMostrar)
+                {
+                    foreach (var contenido3 in Data.Instancia.EditorTexto.ContenidoTablas[contenido2].Values)
+                    {
+
+                        if (contenido3 == "INT PRIMARY KEY")
+                        {
+                            <td>@contenido.Identificador</td>
+                        }
+                        else if (contenido3 == "INT")
+                        {
+                            if (contenido.Entero1 != 0)
+                            {
+                                <td>@contenido.Entero1</td>
+                            }
+                            if (contenido.Entero2 != 0)
+                            {
+                                <td>@contenido.Entero2</td>
+                            }
+                            if (contenido.Entero3 != 0)
+                            {
+                                <td>@contenido.Entero3</td>
+                            }
+                        }
+                        else if (contenido3 == "VARCHAR(100)")
+                        {
+                            if (contenido.Cadena1 != "")
+                            {
+                                <td>@contenido.Cadena1</td>
+                            }
+                            if (contenido.Cadena2 != "")
+                            {
+                                <td>@contenido.Cadena2</td>
+                            }
+                            if (contenido.Cadena3 != "")
+                            {
+                                <td>@contenido.Cadena3</td>
+                            }
+
+                        }
+                        else if (contenido3 == "DATETIME")
+                        {
+                            if (contenido.Tiempo1 != "")
+                            {
+                                <td>@contenido.Tiempo1</td>
+                            }
+                            if (contenido.Tiempo2 != "")
+                            {
+                                <td>@contenido.Tiempo2</td>
+                            }
+                            if (contenido.Tiempo3 != "")
+                            {
+                                <td>@contenido.Tiempo3</td>
+                            }
+                        }
+                    }
+                }
+            </tr>
+        }
+
+    </table>
+}

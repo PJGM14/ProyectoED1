@@ -30,6 +30,8 @@ namespace microSQL_Chian_Garcia.Models
 
         public bool EjecucionCorrecta { get; set; }
 
+        public List<string> TablasMostrar = new List<string>();
+
         public List<Registro> ContenidoMostrar;
 
         public List<string> PropiedadesMostrar;
@@ -656,6 +658,7 @@ namespace microSQL_Chian_Garcia.Models
                     }
                     ContenidoMostrar = listaDatos;
                     PropiedadMostrar.Add("");
+                    TablasMostrar.Add(nombreTabla);
                     Data.Instancia.TreeResgitro.Cerrar();
                 }
                 else
@@ -676,6 +679,7 @@ namespace microSQL_Chian_Garcia.Models
                         PropiedadMostrar.Add(paraMostrar);
                     }
                     ContenidoMostrar = listaDatos;
+                    TablasMostrar.Add(nombreTabla);
                     Data.Instancia.TreeResgitro.Cerrar();
                 }
             }
@@ -693,6 +697,7 @@ namespace microSQL_Chian_Garcia.Models
 
                 listaDatos.Add(Data.Instancia.TreeResgitro.Obtener(llave));
                 ContenidoMostrar = listaDatos;
+                TablasMostrar.Add(nombreTabla);
                 Data.Instancia.TreeResgitro.Cerrar();
             }
             else
@@ -790,6 +795,7 @@ namespace microSQL_Chian_Garcia.Models
 
             return EjecucionCorrecta;
         }
+
 
 
         //DE EJEMPLOOOOO---------------------------------------------------------------------
